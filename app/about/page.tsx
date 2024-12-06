@@ -67,9 +67,11 @@ export default function AboutPage() {
           <div>
             <Image
               isBlurred
+              loading="lazy"
               width={500}
               alt="Value Image"
               src="/siteImages/values.svg"
+              className="drop-shadow-lg"
             />
           </div>
           <div className="flex flex-col items-center justify-center text-left">
