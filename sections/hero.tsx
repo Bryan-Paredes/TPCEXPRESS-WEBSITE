@@ -4,6 +4,7 @@ import { siteConfig } from "@/config/site";
 import { title, subtitle } from "@/components/primitives";
 import { QuoteIcon, WhatssAppIcon } from "@/components/icons";
 import { Button } from "@nextui-org/button";
+import Link from "next/link";
 
 export default function HeroPage() {
   return (
@@ -38,20 +39,20 @@ export default function HeroPage() {
 
       <div className="flex gap-3">
         <Button
-          as="a"
+          as={Link}
           className={buttonStyles({
             color: "primary",
             radius: "lg",
             variant: "ghost",
             class: "text-md font-semibold",
           })}
-          href={siteConfig.navItems[2].href}
+          href={siteConfig.navItems[1].href}
           startContent={<QuoteIcon size={20} />}
         >
           Cotizador
         </Button>
         <Button
-          as="a"
+          as={Link}
           className={buttonStyles({
             color: "success",
             variant: "ghost",
