@@ -1,5 +1,5 @@
-import HeroPage from "@/components/hero";
-import WorkPage from "@/components/work";
+import HeroPage from "@/sections/hero";
+import WorkPage from "@/sections/work";
 
 export default function Home() {
   return (
