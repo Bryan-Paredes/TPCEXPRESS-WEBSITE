@@ -10,7 +10,7 @@ import { SendIcon } from "@/components/icons";
 export default function ContactPage() {
   return (
     <section className="text-center">
-      <div className="items-start justify-between my-10 max-w-3xl mx-auto w-full">
+      <div className="items-start justify-between max-w-3xl mx-auto w-full">
         <div className="flex flex-col gap-3 items-start justify-start">
           <h1 className={title({ class: "text-center mb-6 font-semibold" })}>
             Contactanos
