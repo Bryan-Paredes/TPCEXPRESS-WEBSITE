@@ -48,6 +48,27 @@ export const siteConfig = {
     {
       label: "Emprendedor"
     }
-  ]
+  ],
+
+  coverage: [
+    {
+      label: "Ciudad de Guatemala"
+    },
+    {
+      label: "Mixco"
+    },
+    {
+      label: "San José Pinula"
+    },
+    {
+      label: "Santa Catarina Pinula"
+    },
+    {
+      label: "San Miguel Petapa"
+    },
+    {
+      label: "Villa Nueva"
+    },
+  ],
 
 };
