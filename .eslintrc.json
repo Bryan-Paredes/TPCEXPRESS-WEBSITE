@@ -11,7 +11,7 @@
     "plugin:react-hooks/recommended",
     "plugin:jsx-a11y/recommended",
     "plugin:@next/next/recommended",
-    "some-oter-config-you-use",
+    "next",
     "prettier"
   ],
   "plugins": [
