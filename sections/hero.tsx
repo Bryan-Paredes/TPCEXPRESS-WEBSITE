@@ -5,34 +5,33 @@ import { title, subtitle } from "@/components/primitives";
 import { QuoteIcon, WhatssAppIcon } from "@/components/icons";
 import { Button } from "@nextui-org/button";
 import Link from "next/link";
+import { Image } from "@nextui-org/image";
 
 export default function HeroPage() {
   return (
-    <section className="bg-hero-pattern flex flex-col items-start justify-center gap-4 py-8 md:py-10">
-      <div className="grid grid-cols-2 justify-between gap-2">
+    <section className="flex flex-col items-start justify-center gap-4 bg-background-vector bg-cover py-8 md:py-10">
+      <div className="flex items-center justify-evenly gap-2 bg-background-vector">
         <div className="flex flex-col items-start justify-start">
-          <h1
-            className={`${title({ size: "lg", class: "font-black max-w-md text-left" })}`}
-          >
+          <h1 className={title({ size: "lg", class: "mb-10" })}>
             De{" "}
-            <span
-              className={`${title({ color: "yellow", size: "lg", class: "text-6xl font-black" })}`}
-            >
+            <span className={title({ color: "yellow", size: "xl" })}>
               Puerta a Puerta
             </span>{" "}
             Rápido y Seguro
           </h1>
-          <div className={subtitle({ class: "mt-5 max-w-lg text-xs" })}>
-            En TPC Express, garantizamos envíos rápidos y seguros en todo
-            Guatemala. ¡Confía en nosotros para que tus paquetes lleguen siempre
-            a tiempo!
+          <div className={subtitle({ class: "text-subtitle" })}>
+            Garantizamos envíos rápidos y seguros en todo Guatemala. ¡Confía en
+            nosotros para que tus paquetes lleguen siempre a tiempo!
           </div>
         </div>
-        <div className="flex items-center justify-center">
-          <img
+        <div>
+          <Image
             src="/background.webp"
-            alt=""
-            className="w-fit h-full object-cover"
+            alt="Backgrund"
+            width={800}
+            height={300}
+            className="hidden rounded-lg md:flex"
+            loading="lazy"
           />
         </div>
       </div>
@@ -65,17 +64,6 @@ export default function HeroPage() {
           WhatsApp
         </Button>
       </div>
-
-      {/* <div className="mt-8">
-        <Snippet hideCopyButton hideSymbol variant="bordered">
-          <span>
-            Get started by editing <Code color="primary">app/page.tsx</Code>
-          </span>
-          <span>
-            <Chip color="primary">Hola mundo</Chip>
-          </span>
-        </Snippet>
-      </div> */}
     </section>
   );
 }

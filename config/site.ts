@@ -15,7 +15,7 @@ export const siteConfig = {
     {
       label: "Contacto",
       href: "/contact",
-    }
+    },
   ],
   navMenuItems: [
     {
@@ -26,10 +26,10 @@ export const siteConfig = {
   links: {
     instagram: "https://github.com/nextui-org/nextui",
     facebook: "https://twitter.com/getnextui",
-    whatssapp: "https://wa.me/50238997113/?text=Como%20podemos%20ayudarte%20hoy%20?",
+    whatssapp:
+      "https://wa.me/50238997113/?text=Como%20podemos%20ayudarte%20hoy%20?",
   },
-  companyInfo:
-  {
+  companyInfo: {
     address: "2 calle A 42-62 zona 3 de Mixco",
     phone: "2298-1217",
     email: "info@tpcexpress.com",
@@ -37,38 +37,37 @@ export const siteConfig = {
 
   interestArea: [
     {
-      label: "Empresarial"
+      label: "Empresarial",
     },
     {
-      label: "E-commerce"
+      label: "E-commerce",
     },
     {
-      label: "Información"
+      label: "Información",
     },
     {
-      label: "Emprendedor"
-    }
+      label: "Emprendedor",
+    },
   ],
 
   coverage: [
     {
-      label: "Ciudad de Guatemala"
+      label: "Ciudad de Guatemala",
     },
     {
-      label: "Mixco"
+      label: "Mixco",
     },
     {
-      label: "San José Pinula"
+      label: "San José Pinula",
     },
     {
-      label: "Santa Catarina Pinula"
+      label: "Santa Catarina Pinula",
     },
     {
-      label: "San Miguel Petapa"
+      label: "San Miguel Petapa",
     },
     {
-      label: "Villa Nueva"
+      label: "Villa Nueva",
     },
   ],
-
 };

@@ -29,41 +29,42 @@ import {
   WalletIcon,
   CashIcon,
 } from "@/components/icons";
+import { Image } from "@nextui-org/image";
 
 export const NavbarComponent = () => {
   return (
     <>
       <Navbar className="py-4" maxWidth="lg" position="sticky">
         <NavbarContent className="basis-1/5 sm:basis-full" justify="start">
-          <NavbarBrand as="li" className="gap-3 max-w-fit">
+          <NavbarBrand as="li" className="max-w-fit gap-3">
             <NextLink
-              className="flex justify-start items-center gap-1"
+              className="flex items-center justify-start gap-1"
               href="/"
             >
-              <img
+              <Image
                 alt="Logo"
-                className="w-10 h-10"
+                className="h-10 w-10"
                 loading="lazy"
                 src="/LOGO-TPC.webp"
               />
             </NextLink>
           </NavbarBrand>
-          <NavbarItem className="hidden lg:flex gap-4 justify-start ml-2">
+          <NavbarItem className="ml-2 hidden justify-start gap-4 lg:flex">
             <NextLink
-              className="font-bold text-lg hover:text-primary"
+              className="text-lg font-bold hover:text-primary"
               color="foreground"
               href={siteConfig.navItems[0].href}
             >
               {siteConfig.navItems[0].label}
             </NextLink>
           </NavbarItem>
-          <NavbarContent className="hidden lg:flex gap-4 justify-start ml-2">
+          <NavbarContent className="ml-2 hidden justify-start gap-4 lg:flex">
             <Dropdown backdrop="blur">
               <NavbarItem>
                 <DropdownTrigger>
                   <Button
                     disableRipple
-                    className="p-0 bg-transparent font-bold text-lg data-[hover=true]:bg-transparent data-[hover=true]:text-primary"
+                    className="bg-transparent p-0 text-lg font-bold data-[hover=true]:bg-transparent data-[hover=true]:text-primary"
                     color="default"
                     endContent={<CarretDownIcon size={24} />}
                     radius="lg"
@@ -104,10 +105,10 @@ export const NavbarComponent = () => {
         </NavbarContent>
 
         <NavbarContent
-          className="hidden sm:flex basis-1/5 sm:basis-full"
+          className="hidden basis-1/5 sm:flex sm:basis-full"
           justify="end"
         >
-          <NavbarItem className="hidden sm:flex gap-2">
+          <NavbarItem className="hidden gap-2 sm:flex">
             <Link
               as={Link}
               isExternal
@@ -127,21 +128,21 @@ export const NavbarComponent = () => {
             <ThemeSwitch />
           </NavbarItem>
           <NavbarItem className="hidden md:flex">
-            <Button
-              as={Link}
-              className="text-lg"
-              color="primary"
-              href="/contact"
-              radius="lg"
-              startContent={<ContactIcon size={20} />}
-              variant="ghost"
-            >
-              Contacto
-            </Button>
+            <NextLink href={siteConfig.navItems[2].href}>
+              <Button
+                className="text-lg"
+                color="primary"
+                radius="lg"
+                startContent={<ContactIcon size={20} />}
+                variant="ghost"
+              >
+                Contacto
+              </Button>
+            </NextLink>
           </NavbarItem>
         </NavbarContent>
 
-        <NavbarContent className="sm:hidden basis-1 pl-4" justify="end">
+        <NavbarContent className="basis-1 pl-4 sm:hidden" justify="end">
           <Link
             as={Link}
             isExternal
@@ -163,10 +164,10 @@ export const NavbarComponent = () => {
         </NavbarContent>
 
         <NavbarMenu>
-          <div className="mx-auto mt-8 flex flex-col gap-2 items-center justify-center h-fit">
+          <div className="mx-auto mt-8 flex h-fit flex-col items-center justify-center gap-2">
             <NavbarMenuItem>
               <a
-                className="font-bold text-lg hover:text-primary"
+                className="text-lg font-bold hover:text-primary"
                 color="foreground"
                 href={siteConfig.navItems[0].href}
               >
@@ -177,7 +178,7 @@ export const NavbarComponent = () => {
               <DropdownTrigger>
                 <Button
                   disableRipple
-                  className="p-0 bg-transparent font-semibold data-[hover=true]:bg-transparent data-[hover=true]:text-primary"
+                  className="bg-transparent p-0 font-semibold data-[hover=true]:bg-transparent data-[hover=true]:text-primary"
                   color="default"
                   endContent={<CarretDownIcon size={24} />}
                   radius="lg"

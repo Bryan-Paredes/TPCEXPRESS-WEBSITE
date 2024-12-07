@@ -9,12 +9,14 @@ module.exports = {
   ],
   theme: {
     extend: {
-      fontFamily: {
-        sans: ["var(--font-sans)"],
-        mono: ["var(--font-mono)"],
-      },
       backgroundImage: {
-        "hero-pattern": 'url("/background.svg")',
+        "background-vector": 'url("/background.svg")',
+      },
+      colors: {
+        "gradient-yellow": 'from-[#FF705B] to-[#FFB457]"',
+      },
+      fontSize: {
+        "6xl": "4.5rem",
       },
     },
   },
@@ -46,6 +48,10 @@ module.exports = {
               DEFAULT: "#0fa968",
               foreground: "#ffffff",
             },
+            subtitle: {
+              DEFAULT: "#71717a",
+              foreground: "#ffffff",
+            },
           },
         },
         dark: {
@@ -56,6 +62,10 @@ module.exports = {
             },
             success: {
               DEFAULT: "#0fa968",
+              foreground: "#ffffff",
+            },
+            subtitle: {
+              DEFAULT: "#71717a",
               foreground: "#ffffff",
             },
           },
