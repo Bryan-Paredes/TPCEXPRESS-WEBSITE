@@ -1,4 +1,4 @@
-import styles from "@/styles/globals.module.css";
+// import styles from "@/styles/globals.module.css";
 import { Metadata, Viewport } from "next";
 import clsx from "clsx";
 import { Providers } from "./providers";
@@ -33,7 +33,7 @@ export default function RootLayout({
   return (
     <html suppressHydrationWarning className="dark" lang="es">
       <head />
-      <body className={clsx("min-h-screen bg-background", styles.body)}>
+      <body className={clsx("min-h-screen bg-background")}>
         <Providers themeProps={{ attribute: "class", defaultTheme: "dark" }}>
           <div className="relative flex h-screen flex-col">
             <NavbarComponent />
