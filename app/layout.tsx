@@ -33,11 +33,11 @@ export default function RootLayout({
   return (
     <html suppressHydrationWarning className="dark" lang="es">
       <head />
-      <body className={clsx("min-h-screen bg-background")}>
+      <body>
         <Providers themeProps={{ attribute: "class", defaultTheme: "dark" }}>
-          <div className="relative flex flex-col h-screen">
+          <div className="relative flex h-screen flex-col">
             <NavbarComponent />
-            <main className="container mx-auto max-w-5xl pt-10 px-6 flex-grow">
+            <main className="container mx-auto max-w-5xl flex-grow px-6 pt-10">
               {children}
             </main>
           </div>
