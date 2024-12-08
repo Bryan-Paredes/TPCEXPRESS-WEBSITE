@@ -11,6 +11,8 @@
     "plugin:react-hooks/recommended",
     "plugin:jsx-a11y/recommended",
     "plugin:@next/next/recommended",
+    "@next/eslint-plugin-next",
+    "eslint:recommended",
     "next",
     "prettier"
   ],
