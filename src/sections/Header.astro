@@ -1,0 +1,32 @@
+---
+import { Image } from "astro:assets";
+import Background from "@/assets/background.webp";
+import HeaderButtons from "@/components/HeaderButtons";
+---
+
+<section class="container rounded-lg drop-shadow-lg my-9">
+  <div class="flex items-center justify-center">
+    <div>
+      <h1 class="text-5xl font-bold">
+        De <span
+          class="bg-gradient-to-r from-orange-500 to-orange-700 bg-clip-text text-transparent font-black text-6xl"
+          >Puerta a Puerta
+        </span>Rápido y Seguro
+      </h1>
+      <p class="mt-5 text-gray-400 dark:text-gray-300">
+        Garantizamos envíos rápidos y seguros en todo Guatemala. ¡Confía en
+        nosotros para que tus paquetes lleguen siempre a tiempo!
+      </p>
+      <HeaderButtons client:visible />
+    </div>
+    <div class="hidden md:block">
+      <Image src={Background} alt="Background" loading={"lazy"} />
+    </div>
+  </div>
+</section>
+
+<style>
+  section {
+    background: url("../assets/background.svg") no-repeat top;
+  }
+</style>
