@@ -12,6 +12,7 @@ export default {
       fontFamily: {
         clash: ["Clash", "url(/fonts/clash.woff2)", 'format("woff2")'],
       },
+
       borderRadius: {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
