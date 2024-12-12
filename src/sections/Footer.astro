@@ -1,0 +1,67 @@
+---
+import { menuItems, companyInfo } from "@/config/site";
+import { Divider } from "@nextui-org/react";
+import { MapPinned, MailPlus, PhoneCall } from "lucide-react";
+
+let year = new Date().getFullYear();
+const copyright = `Copyright © ${year} All rights reserved`;
+---
+
+<footer class="max-w-5xl mx-auto">
+  <main class="grid md:grid-cols-3 gap-4 py-8 my-6 md:py-10">
+    <section class="flex tems-center justify-center">
+      <div class="flex items-center justify-center gap-2">
+        <h1 class="text-2xl font-semibold tracking-wider">
+          TPC <span class="text-primary">Express</span>
+        </h1>
+        <img
+          src="/logo.webp"
+          alt="Logo"
+          class="w-6 h-6 object-cover object-center rounded-lg"
+        />
+      </div>
+    </section>
+    <section class="flex items-center justify-center">
+      <div>
+        <p class="text-small text-center max-w-sm">
+          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Dignissimos
+          nisi eveniet quaerat soluta molestias illum voluptatem
+        </p>
+      </div>
+    </section>
+    <section class="flex flex-col gap-1 items-center justify-center">
+      <h3 class="text-center font-medium text-lg">Navegación</h3>
+      <div>
+        {
+          menuItems.map(({ name, href }) => {
+            return (
+              <li class="list-none hover:text-primary">
+                <a href={href}>{name}</a>
+              </li>
+            );
+          })
+        }
+      </div>
+    </section>
+  </main>
+  <section>
+    <div class="flex gap-10 w-full justify-center items-center my-5">
+      <span class="flex items-center justify-center gap-3">
+        <MapPinned size={20} className="text-primary" />
+        {companyInfo.address}
+      </span>
+      <span class="flex items-center justify-center gap-3">
+        <PhoneCall size={20} className="text-primary" />
+        {companyInfo.phone}
+      </span>
+      <span class="flex items-center justify-center gap-3">
+        <MailPlus size={20} className="text-primary" />
+        {companyInfo.email}
+      </span>
+    </div>
+  </section>
+  <Divider class="my-6" />
+  <section class="flex items-center justify-center my-5">
+    <p class="mb-10">{copyright}</p>
+  </section>
+</footer>
