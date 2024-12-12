@@ -1,10 +1,10 @@
 ---
-import { Image } from "astro:assets";
-import Background from "@/assets/takeAway.svg";
+// import { Image } from "astro:assets";
 import HeaderButtons from "@/components/HeaderButtons";
+import { Image } from "@nextui-org/react";
 ---
 
-<section class="container rounded-lg drop-shadow-lg my-9">
+<section class="container rounded-lg drop-shadow-lg my-6">
   <div class="flex items-center justify-center">
     <div>
       <h1 class="text-5xl font-bold">
@@ -17,10 +17,12 @@ import HeaderButtons from "@/components/HeaderButtons";
         Garantizamos envíos rápidos y seguros en todo Guatemala. ¡Confía en
         nosotros para que tus paquetes lleguen siempre a tiempo!
       </p>
-      <HeaderButtons client:visible />
+      <HeaderButtons client:load />
     </div>
     <div class="hidden md:block">
-      <Image src={Background} alt="Background" loading={"lazy"} />
+      <!-- <Image src="/takeAway.svg" alt="Background" width={600} height={600} /> -->
+      <!-- <HeaderImage client:load /> -->
+      <Image client:load src="/takeAway.svg" alt="Background" width={1000} />
     </div>
   </div>
 </section>
