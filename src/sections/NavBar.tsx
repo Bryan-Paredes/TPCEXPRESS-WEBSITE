@@ -121,7 +121,7 @@ export default function NavBar() {
             color="primary"
             variant="ghost"
             className=" text-base font-bold"
-            startContent={<Mails size={20} className={iconClasses} />}
+            startContent={<Mails size={20} />}
           >
             Contacto
           </Button>
