@@ -23,7 +23,7 @@ const copyright = `Copyright © ${year} All rights reserved`;
     </section>
     <section class="flex items-center justify-center">
       <div>
-        <p class="text-small text-center max-w-sm">
+        <p class="text-small text-center max-w-xs">
           Lorem ipsum dolor sit amet consectetur, adipisicing elit. Dignissimos
           nisi eveniet quaerat soluta molestias illum voluptatem
         </p>
@@ -35,7 +35,7 @@ const copyright = `Copyright © ${year} All rights reserved`;
         {
           menuItems.map(({ name, href }) => {
             return (
-              <li class="list-none hover:text-primary">
+              <li class="list-none hover:text-primary text-center">
                 <a href={href}>{name}</a>
               </li>
             );
@@ -45,11 +45,9 @@ const copyright = `Copyright © ${year} All rights reserved`;
     </section>
   </main>
   <section>
-    <div class="flex gap-10 w-full justify-center items-center my-5">
-      <span class="flex items-center justify-center gap-3">
-        <MapPinned size={20} className="text-primary" />
-        {companyInfo.address}
-      </span>
+    <div
+      class="grid md:grid-cols-3 gap-3 md:gap-10 w-full justify-center items-center my-5"
+    >
       <span class="flex items-center justify-center gap-3">
         <PhoneCall size={20} className="text-primary" />
         {companyInfo.phone}
@@ -57,6 +55,10 @@ const copyright = `Copyright © ${year} All rights reserved`;
       <span class="flex items-center justify-center gap-3">
         <MailPlus size={20} className="text-primary" />
         {companyInfo.email}
+      </span>
+      <span class="flex items-center justify-center gap-3">
+        <MapPinned size={20} className="text-primary" />
+        {companyInfo.address}
       </span>
     </div>
   </section>
