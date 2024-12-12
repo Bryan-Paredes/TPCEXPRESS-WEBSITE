@@ -2,6 +2,9 @@
 import Header from "@/sections/Header.astro";
 import Layout from "@/layouts/Layout.astro";
 import Work from "@/sections/Work.astro";
+import Services from "@/sections/Services.tsx";
+import Testimonials from "@/sections/Testimonials.tsx";
+import Footer from "@/sections/Footer.astro";
 ---
 
 <Layout
@@ -10,4 +13,7 @@ import Work from "@/sections/Work.astro";
 >
   <Header />
   <Work />
+  <Services client:visible />
+  <Testimonials />
+  <Footer />
 </Layout>
