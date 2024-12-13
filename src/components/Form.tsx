@@ -1,5 +1,6 @@
 import { interestArea } from "@/config/site";
 import {
+  Button,
   Checkbox,
   Form,
   Input,
@@ -7,7 +8,7 @@ import {
   SelectItem,
   Textarea,
 } from "@nextui-org/react";
-import { BadgeCheck } from "lucide-react";
+import { BadgeCheck, Send } from "lucide-react";
 
 export default function FormComponent() {
   const handlerSubmit = (e: { preventDefault: () => void }) => {
@@ -66,6 +67,15 @@ export default function FormComponent() {
         <Checkbox isRequired icon={<BadgeCheck />}>
           Aceptar el Término de Servicio
         </Checkbox>
+        <Button
+          type="submit"
+          color="primary"
+          variant="solid"
+          startContent={<Send />}
+          className="w-fit uppercase text-white"
+        >
+          Enviar
+        </Button>
       </Form>
     </section>
   );
