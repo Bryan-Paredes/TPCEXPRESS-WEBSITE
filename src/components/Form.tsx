@@ -54,7 +54,11 @@ export default function FormComponent() {
           variant="bordered"
         >
           {interestArea.map(({ label }) => {
-            return <SelectItem value={label}>{label}</SelectItem>;
+            return (
+              <SelectItem key={label} value={label}>
+                {label}
+              </SelectItem>
+            );
           })}
         </Select>
         <Textarea
