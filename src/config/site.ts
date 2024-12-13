@@ -59,3 +59,18 @@ export const companyInfo =
     phone: "2298-1217",
     email: "info@tpcexpress.com",
 }
+
+export const interestArea = [
+    {
+        label: 'Empresarial'
+    },
+    {
+        label: 'E-commerce'
+    },
+    {
+        label: 'Información'
+    },
+    {
+        label: 'Emprendedor'
+    }
+]
