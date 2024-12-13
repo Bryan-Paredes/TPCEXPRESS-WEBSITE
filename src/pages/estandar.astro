@@ -1,1 +1,92 @@
-<h1>Estándar</h1>
+---
+import Layout from "@/layouts/Layout.astro";
+import { MotorBikeIcon, PointIcon } from "@/components/icons";
+import CoverageModal from "@/components/CoverageModal";
+import TableComponent from "@/components/TableInfo";
+import { ServiceButton } from "@/components/Buttons";
+import { Divider } from "@nextui-org/react";
+---
+
+<Layout title="Estándar" description="Estándar">
+  <section class="container">
+    <h1 class="uppercase font-bold text-4xl p-5">De que se trata?</h1>
+    <div
+      class="flex flex-col lg:flex-row items-center justify-between gap-10 my-10 p-4"
+    >
+      <MotorBikeIcon size={200} className="text-primary" />
+      <div class="flex flex-col gap-2">
+        <p class="flex items-center justify-start gap-2">
+          <PointIcon size={25} className="text-primary" />
+          Servicio de paquetería regular.
+        </p>
+        <p class="flex items-center justify-start gap-2">
+          <PointIcon size={25} className="text-primary" /> Puedes cancelar en origen,
+          o destino (+Q3.00).
+        </p>
+        <p class="flex items-center justify-start gap-2">
+          <PointIcon size={25} className="text-primary" />
+          Plazo de entrega 24 a 48 horas.
+        </p>
+        <p class="flex items-center justify-start gap-2">
+          <PointIcon size={25} className="text-primary" />
+          Se cobra 1% de seguro (Sobre el valor de la mercadería), en caso de siniestro
+          tu producto esta cubierto.
+        </p>
+      </div>
+    </div>
+    <div>
+      <h3 class="uppercase font-semibold">Como Funciona?</h3>
+      <p>
+        Llenas nuestro formulario para realizar tu envío, recibiras una
+        confirmación y detalle de tu pedido vía Correo Electrónico, nuestro
+        equipo se pondrá en contacto para confirmar el servicio y listo.
+      </p>
+      <CoverageModal client:load />
+    </div>
+    <div class="flex flex-col gap-2 my-5 p-4">
+      <p class="flex items-center justify-start gap-2">
+        <PointIcon size={25} className="text-primary" />
+        Peso de 1 - 10 Lbs.
+      </p>
+      <p class="flex items-center justify-start gap-2">
+        <PointIcon size={25} className="text-primary" />
+        Debes tener cuenta bancaria válida y activa
+      </p>
+      <p class="flex items-center justify-start gap-2">
+        <PointIcon size={25} className="text-primary" />
+        Se cobran Q3.00 si deseas que el envio se cobre en el destino.
+      </p>
+      <p class="flex items-center justify-start gap-2">
+        <PointIcon size={25} className="text-primary" />2 Intentos de Entrega.
+      </p>
+      <p class="flex items-center justify-start gap-2">
+        <PointIcon size={25} className="text-primary" />
+        Recargo por peso adicional.
+      </p>
+      <p class="flex items-center justify-start gap-2">
+        <PointIcon size={25} className="text-primary" />
+        Puedes cancelar el servicio (Antes de que sea recolectado) sin penalización.
+      </p>
+      <p class="flex items-center justify-start gap-2">
+        <PointIcon size={25} className="text-primary" />
+        <a
+          href="/terms"
+          class="underline underline-offset-2 hover:text-primary"
+        >
+          Aplican Terminos y Condiciones
+        </a>
+      </p>
+    </div>
+    <div>
+      <TableComponent
+        client:visible
+        serviceName={"Estandar"}
+        serviceComision={"N/A"}
+      />
+    </div>
+    <div class="flex items-center justify-center my-10">
+      <ServiceButton client:visible />
+    </div>
+    <Divider className="my-10" />
+  </section>
+</Layout>
