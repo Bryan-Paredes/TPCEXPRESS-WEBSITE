@@ -74,3 +74,24 @@ export const interestArea = [
         label: 'Emprendedor'
     }
 ]
+
+export const coverage = [
+    {
+        label: "Ciudad de Guatemala",
+    },
+    {
+        label: "Mixco",
+    },
+    {
+        label: "San José Pinula",
+    },
+    {
+        label: "Santa Catarina Pinula",
+    },
+    {
+        label: "San Miguel Petapa",
+    },
+    {
+        label: "Villa Nueva",
+    },
+]
