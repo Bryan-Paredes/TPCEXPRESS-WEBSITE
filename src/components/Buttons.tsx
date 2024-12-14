@@ -20,7 +20,7 @@ function HeaderButtons() {
         isExternal
         variant="ghost"
         color="success"
-        href="https://wa.me/5511991525259"
+        href="https://wa.me/50258644597"
         className="uppercase font-semibold"
         startContent={<WhatsappIcon size={20} />}
       >
