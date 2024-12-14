@@ -95,3 +95,24 @@ export const coverage = [
         label: "Villa Nueva",
     },
 ]
+
+export const serviceOptions = [
+    { key: "cod", label: "COD" },
+    { key: "estandar", label: "ESTANDAR" },
+];
+
+export const deliveryOptions = [
+    { key: 1, label: 'Mixco' },
+    { key: 2, label: 'Guatemala' },
+    { key: 3, label: 'Fraijanes' },
+    { key: 4, label: 'Villa Nueva' },
+    { key: 5, label: 'Villa Canales' },
+    { key: 6, label: 'San José Pinula' },
+    { key: 7, label: 'San Miguel Petapa' },
+    { key: 8, label: 'Santa Catarina Pinula' },
+]
+
+export const packageOptions = [
+    { key: 1, label: 'Sobres' },
+    { key: 2, label: 'Paquetes' },
+]
