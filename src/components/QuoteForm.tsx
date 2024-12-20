@@ -16,13 +16,8 @@ import QuoteModal from "./QuoteModal";
 export default function QuoteForm({ service }: { service: string }) {
   const [isOpen, setIsOpen] = useState(false);
   const [formData, setFormData] = useState(null);
-  const [showAlert, setShowAlert] = useState(false);
 
-  const {
-    control,
-    handleSubmit,
-    formState: { isSubmitting },
-  } = useForm({
+  const { control, handleSubmit } = useForm({
     defaultValues: {
       origen: "",
       destino: "",
@@ -36,7 +31,6 @@ export default function QuoteForm({ service }: { service: string }) {
 
   const onSubmit = (data: any) => {
     setFormData(data);
-    setShowAlert(true);
     setIsOpen(true);
   };
 
@@ -226,10 +220,8 @@ export default function QuoteForm({ service }: { service: string }) {
           color="primary"
           variant="solid"
           className="w-fit uppercase text-white my-5"
-          disabled={isSubmitting}
-          isLoading={isSubmitting}
         >
-          {isSubmitting ? "Enviando..." : "Cotizar"}
+          Ver Cotización
         </Button>
       </Form>
 
@@ -238,15 +230,6 @@ export default function QuoteForm({ service }: { service: string }) {
         setIsOpen={setIsOpen}
         formData={formData}
         service={service}
-      />
-
-      <Alert
-        color="success"
-        description="¡Gracias por tu cotización! 😊"
-        isVisible={showAlert}
-        title="¡Gracias!"
-        variant="faded"
-        onClose={() => setShowAlert(false)}
       />
     </div>
   );

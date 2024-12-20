@@ -1,59 +1,105 @@
+import calculateQuote from "@/config/calculateQuote";
+import doc from "@/config/pdf";
 import {
   Button,
+  Link,
   Modal,
   ModalBody,
   ModalContent,
   ModalFooter,
   ModalHeader,
-  useDisclosure,
 } from "@nextui-org/react";
+import { PdfIcon } from "./icons";
 
-export default function QuoteModal({ formData }: any, service: string) {
-  const { isOpen, onOpen, onOpenChange } = useDisclosure();
-
+export default function QuoteModal({
+  formData,
+  isOpen,
+  setIsOpen,
+  service,
+}: any) {
   return (
     <>
-      <Button
-        radius="lg"
-        variant="solid"
-        color="primary"
-        onPress={onOpen}
-        className="my-5 text-white"
-      >
-        Ver Cotización
-      </Button>
-      <Modal isOpen={isOpen} onOpenChange={onOpenChange} backdrop="blur">
+      <Modal isOpen={isOpen} backdrop="blur">
         <ModalContent>
-          {(onClose) => (
-            <>
-              <ModalHeader className="flex flex-col gap-1 uppercase font-bold">
-                Revisa tu Cotización!
-              </ModalHeader>
-              <ModalBody>
-                {formData && (
-                  <>
-                    <ul className="list-none flex items-center justify-start gap-2">
-                      <li>
-                        Origen: <p className=""> {formData["origen"]} </p>
-                      </li>
-                    </ul>
-                    <p>Origen: {formData["origen"]}</p>
-                    <p>Destino: {formData["destino"]}</p>
-                    <p>Envio: {formData["envio"]}</p>
-                    <p>Cantidad: {formData["cantidad"]}</p>
-                    <p>Peso: {formData["peso"]}</p>
-                    <p>Precio: {formData["precio"]}</p>
-                    {service === "estandar" && <p>Pago: {formData["pago"]}</p>}
-                  </>
-                )}
-              </ModalBody>
-              <ModalFooter>
-                <Button variant="light" color="danger" onPress={onClose}>
-                  Cerrar
-                </Button>
-              </ModalFooter>
-            </>
-          )}
+          <>
+            <ModalHeader className="flex flex-col gap-1 uppercase font-bold">
+              Esta es tu cotización
+            </ModalHeader>
+            <ModalBody>
+              {formData && (
+                <>
+                  <p className="uppercase font-bold">
+                    <span className="text-primary">Origen: </span>
+                    {formData["origen"]}
+                  </p>
+                  <p className="uppercase font-bold">
+                    <span className="text-primary">Destino: </span>
+                    {formData["destino"]}
+                  </p>
+                  <p className="uppercase font-bold">
+                    <span className="text-primary">Envío: </span>
+                    {formData["envio"]}
+                  </p>
+                  <p className="uppercase font-bold">
+                    <span className="text-primary">Cantidad: </span>
+                    {`${formData["cantidad"]}`}
+                  </p>
+                  <p className="font-bold">
+                    <span className="text-primary uppercase">Peso: </span>
+                    {formData["peso"]} lbs
+                  </p>
+                  <p className="uppercase font-bold">
+                    <span className="text-primary">Precio: </span>Q
+                    {formData["precio"]}
+                  </p>
+
+                  {service === "estandar" && (
+                    <p className="uppercase font-bold">
+                      <span className="text-primary">Tipo de Pago: </span>
+                      {formData["pago"]}
+                    </p>
+                  )}
+
+                  <p className="uppercase font-bold text-xl text-green-600">
+                    <span className="">Total: </span>
+                    <span>
+                      Q
+                      {calculateQuote(
+                        formData["cantidad"],
+                        formData["precio"],
+                        service === "estandar" && formData["pago"] === "destino"
+                      )}
+                    </span>
+                  </p>
+                </>
+              )}
+            </ModalBody>
+            <ModalFooter>
+              <Button
+                isIconOnly
+                as={Link}
+                startContent={<PdfIcon />}
+                onPress={() => doc.save("quote.pdf")}
+              />
+              <Button
+                as={Link}
+                variant="light"
+                color="warning"
+                href="/envio"
+                className="uppercase"
+              >
+                Realiza Envío
+              </Button>
+              <Button
+                variant="light"
+                color="danger"
+                className="uppercase"
+                onPress={() => setIsOpen(false)}
+              >
+                Cerrar
+              </Button>
+            </ModalFooter>
+          </>
         </ModalContent>
       </Modal>
     </>
