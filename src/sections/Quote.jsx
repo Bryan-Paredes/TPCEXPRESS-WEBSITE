@@ -1,4 +1,5 @@
 import QuoteForm from "@/components/QuoteForm";
+import QuoteModal from "@/components/QuoteModal";
 import { serviceOptions } from "@/config/site";
 // import type { Selection } from "@nextui-org/react";
 
