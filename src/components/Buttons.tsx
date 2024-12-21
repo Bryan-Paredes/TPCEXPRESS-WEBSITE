@@ -32,18 +32,32 @@ function HeaderButtons() {
 
 function ServiceButton() {
   return (
-    <Button
-      as={Link}
-      size="lg"
-      variant="solid"
-      color="primary"
-      radius="lg"
-      href="/quote"
-      className="text-white"
-      startContent={<SendServiceIcon size={50} />}
-    >
-      Solicitar Servicio
-    </Button>
+    <div className="flex flex-col md:flex-row gap-4 items-start md:items-center justify-center my-5 mx-auto">
+      <Button
+        as={Link}
+        size="lg"
+        variant="solid"
+        color="primary"
+        radius="lg"
+        className="text-white"
+        href="/quote"
+        startContent={<Route size={30} />}
+      >
+        Cotización
+      </Button>
+      <Button
+        as={Link}
+        size="lg"
+        variant="solid"
+        color="primary"
+        radius="lg"
+        href="/envio"
+        className="text-white"
+        startContent={<SendServiceIcon size={50} />}
+      >
+        Solicitar Servicio
+      </Button>
+    </div>
   );
 }
 
