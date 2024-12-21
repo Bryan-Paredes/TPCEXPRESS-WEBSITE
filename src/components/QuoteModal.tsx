@@ -76,6 +76,7 @@ export default function QuoteModal({
             </ModalBody>
             <ModalFooter>
               <Button
+                isDisabled
                 isIconOnly
                 as={Link}
                 startContent={<PdfIcon />}

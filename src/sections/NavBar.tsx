@@ -111,10 +111,8 @@ export default function NavBar() {
         </Dropdown>
       </NavbarContent>
       <NavbarContent justify="end">
-        <NavbarItem className="hidden lg:flex">
+        <NavbarItem className="flex gap-3">
           <ModeToggle />
-        </NavbarItem>
-        <NavbarItem>
           <Button
             as={Link}
             href="/contacto"

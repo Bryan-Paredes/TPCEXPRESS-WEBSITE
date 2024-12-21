@@ -1,20 +1,17 @@
 import QuoteForm from "@/components/QuoteForm";
-import QuoteModal from "@/components/QuoteModal";
 import { serviceOptions } from "@/config/site";
-// import type { Selection } from "@nextui-org/react";
-
 import { Select, SelectItem } from "@nextui-org/react";
 import { useState } from "react";
 
 export default function QuoteSection() {
   const [serviceSelected, setServiceSelected] = useState("");
 
-  const handleSelectionChange = (e) => {
+  const handleSelectionChange = (e: any) => {
     setServiceSelected(e.target.value);
   };
 
   return (
-    <main className="container mx-auto">
+    <main>
       <Select
         isRequired
         label="Selecciona el servicio"

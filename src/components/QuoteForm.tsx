@@ -215,14 +215,24 @@ export default function QuoteForm({ service }: { service: string }) {
             }}
           />
         )}
-        <Button
-          type="submit"
-          color="primary"
-          variant="solid"
-          className="w-fit uppercase text-white my-5"
-        >
-          Ver Cotización
-        </Button>
+        <div className="flex justify-center items-center gap-5">
+          <Button
+            type="submit"
+            color="success"
+            variant="ghost"
+            className="w-fit uppercase  my-5"
+          >
+            Ver Cotización
+          </Button>
+          <Button
+            type="reset"
+            variant="ghost"
+            color="danger"
+            className="w-fit uppercase"
+          >
+            Limpiar Formulario
+          </Button>
+        </div>
       </Form>
 
       <QuoteModal
