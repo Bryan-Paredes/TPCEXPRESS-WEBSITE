@@ -8,12 +8,12 @@ import {
   SelectItem,
   Button,
 } from "@nextui-org/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import QuoteModal from "./QuoteModal";
-// import type { CotizacionState } from "@/context/envio";
+import { useCotizacionStore } from "@/stores/servicio";
 
-export const defaultCotizacion = {
+export const FormValues = {
   origen: "",
   destino: "",
   queEnvias: "",
@@ -23,22 +23,18 @@ export const defaultCotizacion = {
   dondePaga: "",
 };
 
-export default function QuoteForm({
-  serviceSelected,
-}: {
-  serviceSelected: string;
-}) {
-  const [formData, setFormData] = useState(null);
+export default function QuoteForm() {
   const [isOpen, setIsOpen] = useState(false);
 
-  const { control, handleSubmit, reset } = useForm({
-    defaultValues: defaultCotizacion,
+  const { control, handleSubmit, reset, watch } = useForm({
+    defaultValues: FormValues,
   });
 
+  const { servicio, submitForm, resetForm } = useCotizacionStore();
+
   const onSubmit = (data: any) => {
-    setFormData(data);
+    submitForm(data);
     setIsOpen(true);
-    console.log("Datos enviados correctamente:", data);
   };
 
   return (
@@ -58,7 +54,7 @@ export default function QuoteForm({
               errorMessage={error?.message}
               isInvalid={invalid}
             >
-              {deliveryOptions.map(({ key, label }) => (
+              {deliveryOptions.map(({ label }) => (
                 <SelectItem key={label}>{label}</SelectItem>
               ))}
             </Select>
@@ -79,7 +75,7 @@ export default function QuoteForm({
               errorMessage={error?.message}
               isInvalid={invalid}
             >
-              {deliveryOptions.map(({ key, label }) => (
+              {deliveryOptions.map(({ label }) => (
                 <SelectItem key={label}>{label}</SelectItem>
               ))}
             </Select>
@@ -180,7 +176,7 @@ export default function QuoteForm({
               label="Precio de producto a cobrar Q"
               name="Precio"
               variant="bordered"
-              {...(serviceSelected === "estandar"
+              {...(servicio === "estandar"
                 ? {
                     description: (
                       <p className="text-primary">
@@ -197,7 +193,7 @@ export default function QuoteForm({
             required: "Debes Seleccionar el Precio",
           }}
         />
-        {serviceSelected === "estandar" && (
+        {servicio === "estandar" && (
           <Controller
             control={control}
             name="dondePaga"
@@ -236,14 +232,17 @@ export default function QuoteForm({
             variant="ghost"
             color="danger"
             className="w-fit uppercase"
-            onPress={() => reset()}
+            onPress={() => {
+              resetForm();
+              reset();
+            }}
           >
             Limpiar Formulario
           </Button>
         </div>
       </Form>
 
-      <QuoteModal isOpen={isOpen} setIsOpen={setIsOpen} formData={formData} />
+      <QuoteModal isOpen={isOpen} setIsOpen={setIsOpen} />
     </div>
   );
 }

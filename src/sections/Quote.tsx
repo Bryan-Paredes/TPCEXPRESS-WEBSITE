@@ -1,13 +1,14 @@
 import QuoteForm from "@/components/QuoteForm";
 import { serviceOptions } from "@/config/site";
 import { Select, SelectItem } from "@nextui-org/react";
-import { useState } from "react";
+import { useCotizacionStore } from "@/stores/servicio";
 
 export default function QuoteSection() {
-  const [serviceSelected, setServiceSelected] = useState("");
+  const servicio = useCotizacionStore((state) => state.servicio);
+  const setServicio = useCotizacionStore((state) => state.setServicio);
 
   const handleSelectionChange = (e: any) => {
-    setServiceSelected(e.target.value);
+    setServicio(e.target.value);
   };
 
   return (
@@ -17,7 +18,7 @@ export default function QuoteSection() {
         label="Selecciona el servicio"
         radius="lg"
         variant="bordered"
-        selectedKeys={[serviceSelected]}
+        selectedKeys={servicio ? [servicio] : []}
         onChange={handleSelectionChange}
       >
         {serviceOptions.map((option) => (
@@ -25,8 +26,8 @@ export default function QuoteSection() {
         ))}
       </Select>
       <div className="mt-5 mx-auto">
-        {serviceSelected ? (
-          <QuoteForm serviceSelected={serviceSelected} />
+        {servicio ? (
+          <QuoteForm />
         ) : (
           <p className="text-center text-red-500">
             **Selecciona un servicio para continuar con la cotización**

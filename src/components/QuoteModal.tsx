@@ -10,13 +10,20 @@ import {
   ModalHeader,
 } from "@nextui-org/react";
 import { PdfIcon } from "./icons";
+import { useCotizacionStore } from "@/stores/servicio";
 
-export default function QuoteModal({
-  formData,
-  isOpen,
-  setIsOpen,
-  service,
-}: any) {
+export default function QuoteModal({ isOpen, setIsOpen }: any) {
+  const {
+    origen,
+    destino,
+    queEnvias,
+    cantidadPaquetes,
+    peso,
+    precioProducto,
+    dondePaga,
+    servicio,
+  } = useCotizacionStore();
+
   return (
     <>
       <Modal isOpen={isOpen} backdrop="blur">
@@ -26,53 +33,51 @@ export default function QuoteModal({
               Esta es tu cotización
             </ModalHeader>
             <ModalBody>
-              {formData && (
-                <>
-                  <p className="uppercase font-bold">
-                    <span className="text-primary">Origen: </span>
-                    {formData["origen"]}
-                  </p>
-                  <p className="uppercase font-bold">
-                    <span className="text-primary">Destino: </span>
-                    {formData["destino"]}
-                  </p>
-                  <p className="uppercase font-bold">
-                    <span className="text-primary">Envío: </span>
-                    {formData["queEnvias"]}
-                  </p>
-                  <p className="uppercase font-bold">
-                    <span className="text-primary">Cantidad: </span>
-                    {formData["cantidadPaquetes"]}
-                  </p>
-                  <p className="font-bold">
-                    <span className="text-primary uppercase">Peso: </span>
-                    {formData["peso"]} lbs
-                  </p>
-                  <p className="uppercase font-bold">
-                    <span className="text-primary">Precio: </span>Q
-                    {formData["precioProducto"]}
-                  </p>
+              <>
+                <p className="uppercase font-bold">
+                  <span className="text-primary">Origen: </span>
+                  {origen}
+                </p>
+                <p className="uppercase font-bold">
+                  <span className="text-primary">Destino: </span>
+                  {destino}
+                </p>
+                <p className="uppercase font-bold">
+                  <span className="text-primary">Envío: </span>
+                  {queEnvias}
+                </p>
+                <p className="uppercase font-bold">
+                  <span className="text-primary">Cantidad: </span>
+                  {cantidadPaquetes}
+                </p>
+                <p className="font-bold">
+                  <span className="text-primary uppercase">Peso: </span>
+                  {peso} lbs
+                </p>
+                <p className="uppercase font-bold">
+                  <span className="text-primary">Precio: </span>Q
+                  {precioProducto}
+                </p>
 
-                  {service === "estandar" && (
-                    <p className="uppercase font-bold">
-                      <span className="text-primary">Tipo de Pago: </span>
-                      {formData["dondePaga"]}
-                    </p>
-                  )}
-
-                  <p className="uppercase font-bold text-xl text-green-600">
-                    <span className="">Total: </span>
-                    <span>
-                      Q
-                      {calculateQuote(
-                        formData["cantidadPaquetes"],
-                        formData["precioProducto"],
-                        service === "estandar" && formData["pago"] === "destino"
-                      )}
-                    </span>
+                {servicio === "estandar" && (
+                  <p className="uppercase font-bold">
+                    <span className="text-primary">Tipo de Pago: </span>
+                    {dondePaga}
                   </p>
-                </>
-              )}
+                )}
+
+                <p className="uppercase font-bold text-xl text-green-600">
+                  <span className="">Total: </span>
+                  <span>
+                    Q
+                    {calculateQuote(
+                      Number(cantidadPaquetes),
+                      Number(precioProducto),
+                      servicio === "estandar" && dondePaga === "destino"
+                    )}
+                  </span>
+                </p>
+              </>
             </ModalBody>
             <ModalFooter>
               <Button
