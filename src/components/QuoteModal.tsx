@@ -38,11 +38,11 @@ export default function QuoteModal({
                   </p>
                   <p className="uppercase font-bold">
                     <span className="text-primary">Envío: </span>
-                    {formData["envio"]}
+                    {formData["queEnvias"]}
                   </p>
                   <p className="uppercase font-bold">
                     <span className="text-primary">Cantidad: </span>
-                    {`${formData["cantidad"]}`}
+                    {formData["cantidadPaquetes"]}
                   </p>
                   <p className="font-bold">
                     <span className="text-primary uppercase">Peso: </span>
@@ -50,13 +50,13 @@ export default function QuoteModal({
                   </p>
                   <p className="uppercase font-bold">
                     <span className="text-primary">Precio: </span>Q
-                    {formData["precio"]}
+                    {formData["precioProducto"]}
                   </p>
 
                   {service === "estandar" && (
                     <p className="uppercase font-bold">
                       <span className="text-primary">Tipo de Pago: </span>
-                      {formData["pago"]}
+                      {formData["dondePaga"]}
                     </p>
                   )}
 
@@ -65,8 +65,8 @@ export default function QuoteModal({
                     <span>
                       Q
                       {calculateQuote(
-                        formData["cantidad"],
-                        formData["precio"],
+                        formData["cantidadPaquetes"],
+                        formData["precioProducto"],
                         service === "estandar" && formData["pago"] === "destino"
                       )}
                     </span>
@@ -81,6 +81,7 @@ export default function QuoteModal({
                 as={Link}
                 startContent={<PdfIcon />}
                 onPress={() => doc.save("quote.pdf")}
+                color="secondary"
               />
               <Button
                 as={Link}

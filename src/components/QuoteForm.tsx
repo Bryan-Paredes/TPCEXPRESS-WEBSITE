@@ -7,31 +7,38 @@ import {
   Select,
   SelectItem,
   Button,
-  Alert,
 } from "@nextui-org/react";
 import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import QuoteModal from "./QuoteModal";
+// import type { CotizacionState } from "@/context/envio";
 
-export default function QuoteForm({ service }: { service: string }) {
-  const [isOpen, setIsOpen] = useState(false);
+export const defaultCotizacion = {
+  origen: "",
+  destino: "",
+  queEnvias: "",
+  cantidadPaquetes: "",
+  peso: "",
+  precioProducto: "",
+  dondePaga: "",
+};
+
+export default function QuoteForm({
+  serviceSelected,
+}: {
+  serviceSelected: string;
+}) {
   const [formData, setFormData] = useState(null);
+  const [isOpen, setIsOpen] = useState(false);
 
-  const { control, handleSubmit } = useForm({
-    defaultValues: {
-      origen: "",
-      destino: "",
-      envio: "",
-      cantidad: "",
-      peso: "",
-      precio: "",
-      pago: "",
-    },
+  const { control, handleSubmit, reset } = useForm({
+    defaultValues: defaultCotizacion,
   });
 
   const onSubmit = (data: any) => {
     setFormData(data);
     setIsOpen(true);
+    console.log("Datos enviados correctamente:", data);
   };
 
   return (
@@ -81,7 +88,7 @@ export default function QuoteForm({ service }: { service: string }) {
         />
         <Controller
           control={control}
-          name="envio"
+          name="queEnvias"
           render={({ field, fieldState: { invalid, error } }) => (
             <Select
               {...field}
@@ -102,7 +109,7 @@ export default function QuoteForm({ service }: { service: string }) {
         />
         <Controller
           control={control}
-          name="cantidad"
+          name="cantidadPaquetes"
           render={({ field, fieldState: { invalid, error } }) => (
             <Input
               {...field}
@@ -161,7 +168,7 @@ export default function QuoteForm({ service }: { service: string }) {
         />
         <Controller
           control={control}
-          name="precio"
+          name="precioProducto"
           render={({ field, fieldState: { invalid, error } }) => (
             <Input
               {...field}
@@ -173,7 +180,7 @@ export default function QuoteForm({ service }: { service: string }) {
               label="Precio de producto a cobrar Q"
               name="Precio"
               variant="bordered"
-              {...(service === "estandar"
+              {...(serviceSelected === "estandar"
                 ? {
                     description: (
                       <p className="text-primary">
@@ -190,10 +197,10 @@ export default function QuoteForm({ service }: { service: string }) {
             required: "Debes Seleccionar el Precio",
           }}
         />
-        {service === "estandar" && (
+        {serviceSelected === "estandar" && (
           <Controller
             control={control}
-            name="pago"
+            name="dondePaga"
             render={({ field, fieldState: { invalid, error } }) => (
               <RadioGroup
                 {...field}
@@ -229,18 +236,14 @@ export default function QuoteForm({ service }: { service: string }) {
             variant="ghost"
             color="danger"
             className="w-fit uppercase"
+            onPress={() => reset()}
           >
             Limpiar Formulario
           </Button>
         </div>
       </Form>
 
-      <QuoteModal
-        isOpen={isOpen}
-        setIsOpen={setIsOpen}
-        formData={formData}
-        service={service}
-      />
+      <QuoteModal isOpen={isOpen} setIsOpen={setIsOpen} formData={formData} />
     </div>
   );
 }

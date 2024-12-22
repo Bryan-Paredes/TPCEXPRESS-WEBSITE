@@ -26,7 +26,7 @@ export default function QuoteSection() {
       </Select>
       <div className="mt-5 mx-auto">
         {serviceSelected ? (
-          <QuoteForm service={serviceSelected} />
+          <QuoteForm serviceSelected={serviceSelected} />
         ) : (
           <p className="text-center text-red-500">
             **Selecciona un servicio para continuar con la cotización**
