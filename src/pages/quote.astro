@@ -1,4 +1,5 @@
 ---
+import AlertUI from "@/components/ui/alert";
 import Layout from "@/layouts/Layout.astro";
 import QuoteSection from "@/sections/Quote";
 ---
@@ -8,7 +9,12 @@ import QuoteSection from "@/sections/Quote";
   description="Calcula el costo de tu envío al instante. Tarifas transparentes y competitivas para todos nuestros servicios de mensajería. ¡Cotiza gratis y envía con confianza!"
 >
   <section class="container">
-    <h1 class="text-4xl font-bold my-10">Realizar Cotización</h1>
+    <div class="my-6">
+      <h1 class="text-4xl font-bold my-1">Realizar Cotización</h1>
+      <AlertUI
+        title="Los paquetes serán enviados a la misma dirección seleccionada."
+      />
+    </div>
     <QuoteSection client:load />
   </section>
 </Layout>

@@ -1,4 +1,6 @@
 ---
+import AlertUI from "@/components/ui/alert";
+import ShipSection from "@/sections/Ship";
 import Layout from "@/layouts/Layout.astro";
 ---
 
@@ -6,5 +8,13 @@ import Layout from "@/layouts/Layout.astro";
   title="Programa tu Envío Online | Servicio Inmediato | TPC Express"
   description="Realiza tu envío en minutos con TPC Express. Proceso simple y seguro, confirmación inmediata y seguimiento personalizado. ¡Comienza a enviar ahora!"
 >
-  <h1>Envio</h1>
+  <section class="container">
+    <div class="my-6">
+      <h1 class="text-4xl font-bold my-1">Programa tu envío</h1>
+      <AlertUI
+        title="Los paquetes serán enviados a la misma dirección seleccionada."
+      />
+    </div>
+    <ShipSection client:load />
+  </section>
 </Layout>
