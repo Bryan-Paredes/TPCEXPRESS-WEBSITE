@@ -4,6 +4,7 @@ import {
   Checkbox,
   Form,
   Input,
+  Link,
   Select,
   SelectItem,
   Textarea,
@@ -68,9 +69,14 @@ export default function FormComponent() {
           name="message"
           variant="bordered"
         />
-        <Checkbox isRequired icon={<BadgeCheck />}>
-          Aceptar el Término de Servicio
-        </Checkbox>
+        <div className="flex items-center justify-center gap-2">
+          <Checkbox isRequired icon={<BadgeCheck />}>
+            Aceptar
+          </Checkbox>
+          <Link href="/terminos" underline="hover">
+            Término de Servicio
+          </Link>
+        </div>
         <Button
           type="submit"
           color="primary"

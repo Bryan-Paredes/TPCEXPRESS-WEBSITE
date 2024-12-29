@@ -4,21 +4,23 @@ import { Select, SelectItem } from "@nextui-org/react";
 import { useCotizacionStore } from "@/stores/servicio";
 
 export default function QuoteSection() {
-  const servicio = useCotizacionStore((state) => state.servicio);
-  const setServicio = useCotizacionStore((state) => state.setServicio);
+  const servicioQuote = useCotizacionStore((state) => state.servicioQuote);
+  const setServicioQuote = useCotizacionStore(
+    (state) => state.setServicioQuote
+  );
 
   const handleSelectionChange = (e: any) => {
-    setServicio(e.target.value);
+    setServicioQuote(e.target.value);
   };
 
   return (
-    <main>
+    <main className="px-8 sm:px-0">
       <Select
         isRequired
         label="Selecciona el servicio"
         radius="lg"
         variant="bordered"
-        selectedKeys={servicio ? [servicio] : []}
+        selectedKeys={servicioQuote ? [servicioQuote] : []}
         onChange={handleSelectionChange}
       >
         {serviceOptions.map((option) => (
@@ -26,7 +28,7 @@ export default function QuoteSection() {
         ))}
       </Select>
       <div className="mt-5 mx-auto">
-        {servicio ? (
+        {servicioQuote ? (
           <QuoteForm />
         ) : (
           <p className="text-center text-red-500">

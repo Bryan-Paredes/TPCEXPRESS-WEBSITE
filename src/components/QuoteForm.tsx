@@ -8,32 +8,24 @@ import {
   SelectItem,
   Button,
 } from "@nextui-org/react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import QuoteModal from "./QuoteModal";
 import { useCotizacionStore } from "@/stores/servicio";
-
-export const FormValues = {
-  origen: "",
-  destino: "",
-  queEnvias: "",
-  cantidadPaquetes: "",
-  peso: "",
-  precioProducto: "",
-  dondePaga: "",
-};
+import { FormQuoteValues } from "@/lib/formValues";
 
 export default function QuoteForm() {
   const [isOpen, setIsOpen] = useState(false);
 
-  const { control, handleSubmit, reset, watch } = useForm({
-    defaultValues: FormValues,
+  const { control, handleSubmit, reset } = useForm({
+    defaultValues: FormQuoteValues,
   });
 
-  const { servicio, submitForm, resetForm } = useCotizacionStore();
+  const { servicioQuote, submitFormQuote, resetFormQuote } =
+    useCotizacionStore();
 
   const onSubmit = (data: any) => {
-    submitForm(data);
+    submitFormQuote(data);
     setIsOpen(true);
   };
 
@@ -42,7 +34,7 @@ export default function QuoteForm() {
       <Form className="flex flex-col gap-2" onSubmit={handleSubmit(onSubmit)}>
         <Controller
           control={control}
-          name="origen"
+          name="origenQuote"
           render={({ field, fieldState: { invalid, error } }) => (
             <Select
               {...field}
@@ -63,7 +55,7 @@ export default function QuoteForm() {
         />
         <Controller
           control={control}
-          name="destino"
+          name="destinoQuote"
           render={({ field, fieldState: { invalid, error } }) => (
             <Select
               {...field}
@@ -84,7 +76,7 @@ export default function QuoteForm() {
         />
         <Controller
           control={control}
-          name="queEnvias"
+          name="queEnviasQuote"
           render={({ field, fieldState: { invalid, error } }) => (
             <Select
               {...field}
@@ -105,7 +97,7 @@ export default function QuoteForm() {
         />
         <Controller
           control={control}
-          name="cantidadPaquetes"
+          name="cantidadPaquetesQuote"
           render={({ field, fieldState: { invalid, error } }) => (
             <Input
               {...field}
@@ -119,6 +111,9 @@ export default function QuoteForm() {
               label="Cantidad de Paquetes"
               name={field.name}
               variant="bordered"
+              description={
+                <p className="text-primary">El máximo es 5 paquetes</p>
+              }
             />
           )}
           rules={{
@@ -133,7 +128,7 @@ export default function QuoteForm() {
         />
         <Controller
           control={control}
-          name="peso"
+          name="pesoQuote"
           render={({ field, fieldState: { invalid, error } }) => (
             <Input
               {...field}
@@ -164,7 +159,7 @@ export default function QuoteForm() {
         />
         <Controller
           control={control}
-          name="precioProducto"
+          name="precioProductoQuote"
           render={({ field, fieldState: { invalid, error } }) => (
             <Input
               {...field}
@@ -176,7 +171,7 @@ export default function QuoteForm() {
               label="Precio de producto a cobrar Q"
               name="Precio"
               variant="bordered"
-              {...(servicio === "estandar"
+              {...(servicioQuote === "estandar"
                 ? {
                     description: (
                       <p className="text-primary">
@@ -193,10 +188,10 @@ export default function QuoteForm() {
             required: "Debes Seleccionar el Precio",
           }}
         />
-        {servicio === "estandar" && (
+        {servicioQuote === "estandar" && (
           <Controller
             control={control}
-            name="dondePaga"
+            name="dondePagaQuote"
             render={({ field, fieldState: { invalid, error } }) => (
               <RadioGroup
                 {...field}
@@ -218,7 +213,7 @@ export default function QuoteForm() {
             }}
           />
         )}
-        <div className="flex justify-center items-center gap-5">
+        <div className="flex flex-col sm:flex-row justify-center items-start sm:items-center sm:gap-3">
           <Button
             type="submit"
             color="success"
@@ -233,7 +228,7 @@ export default function QuoteForm() {
             color="danger"
             className="w-fit uppercase"
             onPress={() => {
-              resetForm();
+              resetFormQuote();
               reset();
             }}
           >

@@ -14,15 +14,17 @@ import { useCotizacionStore } from "@/stores/servicio";
 
 export default function QuoteModal({ isOpen, setIsOpen }: any) {
   const {
-    origen,
-    destino,
-    queEnvias,
-    cantidadPaquetes,
-    peso,
-    precioProducto,
-    dondePaga,
-    servicio,
+    origenQuote,
+    destinoQuote,
+    queEnviasQuote,
+    cantidadPaquetesQuote,
+    pesoQuote,
+    precioProductoQuote,
+    dondePagaQuote,
+    servicioQuote,
   } = useCotizacionStore();
+
+  console.log(origenQuote);
 
   return (
     <>
@@ -36,33 +38,33 @@ export default function QuoteModal({ isOpen, setIsOpen }: any) {
               <>
                 <p className="uppercase font-bold">
                   <span className="text-primary">Origen: </span>
-                  {origen}
+                  {origenQuote}
                 </p>
                 <p className="uppercase font-bold">
                   <span className="text-primary">Destino: </span>
-                  {destino}
+                  {destinoQuote}
                 </p>
                 <p className="uppercase font-bold">
                   <span className="text-primary">Envío: </span>
-                  {queEnvias}
+                  {queEnviasQuote}
                 </p>
                 <p className="uppercase font-bold">
-                  <span className="text-primary">Cantidad: </span>
-                  {cantidadPaquetes}
+                  <span className="text-primary">Paquetes: </span>
+                  {cantidadPaquetesQuote}
                 </p>
                 <p className="font-bold">
                   <span className="text-primary uppercase">Peso: </span>
-                  {peso} lbs
+                  {pesoQuote} lbs
                 </p>
                 <p className="uppercase font-bold">
                   <span className="text-primary">Precio: </span>Q
-                  {precioProducto}
+                  {precioProductoQuote}
                 </p>
 
-                {servicio === "estandar" && (
+                {servicioQuote === "estandar" && (
                   <p className="uppercase font-bold">
                     <span className="text-primary">Tipo de Pago: </span>
-                    {dondePaga}
+                    {dondePagaQuote}
                   </p>
                 )}
 
@@ -71,9 +73,10 @@ export default function QuoteModal({ isOpen, setIsOpen }: any) {
                   <span>
                     Q
                     {calculateQuote(
-                      Number(cantidadPaquetes),
-                      Number(precioProducto),
-                      servicio === "estandar" && dondePaga === "destino"
+                      Number(cantidadPaquetesQuote),
+                      Number(precioProductoQuote),
+                      servicioQuote === "estandar" &&
+                        dondePagaQuote === "destino"
                     )}
                   </span>
                 </p>
@@ -82,12 +85,13 @@ export default function QuoteModal({ isOpen, setIsOpen }: any) {
             <ModalFooter>
               <Button
                 isDisabled
-                isIconOnly
                 as={Link}
                 startContent={<PdfIcon />}
                 onPress={() => doc.save("quote.pdf")}
                 color="secondary"
-              />
+              >
+                soon
+              </Button>
               <Button
                 as={Link}
                 variant="light"
