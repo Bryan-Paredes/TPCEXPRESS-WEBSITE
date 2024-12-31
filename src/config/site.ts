@@ -1,3 +1,4 @@
+
 export const menuItems = [
     {
         name: "Nosotros",
@@ -115,4 +116,18 @@ export const deliveryOptions = [
 export const packageOptions = [
     { key: 1, label: 'Sobres' },
     { key: 2, label: 'Paquetes' },
+]
+
+export const bancos = [
+    { key: 1, label: 'Banco Industrial' },
+    { key: 2, label: 'G&T Continental' },
+    { key: 3, label: 'Banco de Desarrollo Rural' },
+    { key: 4, label: 'Banco de America Central' },
+    { key: 5, label: 'Banco Agromercantil de Guatemala' },
+    { key: 6, label: 'Banco Promerica' }
+]
+
+export const tipoCuenta = [
+    { key: 1, label: 'Monetaria' },
+    { key: 2, label: 'Ahorro' }
 ]
