@@ -1,6 +1,16 @@
+import { bancos, tipoCuenta } from "@/config/site";
 import { useCotizacionStore } from "@/stores/servicio";
-import { Button, Form, Input, Textarea } from "@nextui-org/react";
+import {
+  Button,
+  Divider,
+  Form,
+  Input,
+  Select,
+  SelectItem,
+  Textarea,
+} from "@nextui-org/react";
 import { Controller, useForm } from "react-hook-form";
+import { PackageCheck } from "lucide-react";
 
 export default function ShipSection() {
   const { origenQuote, servicioQuote, destinoQuote } = useCotizacionStore();
@@ -11,16 +21,15 @@ export default function ShipSection() {
     console.log(data);
   };
 
-  console.log(origenQuote);
-
   return (
     <main className="px-8 sm:px-0">
       <h3 className="text-lg font-bold my-4">
         Servicio Solcitado:{" "}
         <span className="text-primary uppercase">{servicioQuote}</span>
       </h3>
+      <Divider className="my-5" />
       <Form onSubmit={handleSubmit(onSubmit)}>
-        <h3>Información de Remitente</h3>
+        <h3 className="uppercase font-bold">Información de Remitente</h3>
         <Controller
           name="origenEnvio"
           control={control}
@@ -131,7 +140,8 @@ export default function ShipSection() {
             />
           )}
         />
-        <h3>Información de Destinatario</h3>
+        <Divider className="my-5" />
+        <h3 className="uppercase font-bold">Información de Destinatario</h3>
         <Input
           isRequired
           isDisabled={destinoQuote ? true : false}
@@ -234,7 +244,147 @@ export default function ShipSection() {
             />
           )}
         />
-        <Button type="submit">Enviar</Button>
+        <Divider className="my-5" />
+        <h3 className="uppercase font-bold">Datos de Factura</h3>
+        <Controller
+          name="nit"
+          control={control}
+          render={({ field, fieldState: { invalid, error } }) => (
+            <Input
+              {...field}
+              isRequired
+              type="text"
+              variant="bordered"
+              label="NIT"
+              isInvalid={invalid}
+              errorMessage={error?.message}
+              description={
+                <p className="text-primary">
+                  Debes ingresar número de NIT sin guiones o CF
+                </p>
+              }
+            />
+          )}
+          rules={{
+            required: "El campo es obligatorio",
+          }}
+        />
+        <Controller
+          name="nombreNit"
+          control={control}
+          render={({ field, fieldState: { invalid, error } }) => (
+            <Input
+              isRequired
+              type="text"
+              variant="bordered"
+              label="Nombre"
+              isInvalid={invalid}
+              errorMessage={error?.message}
+            />
+          )}
+          rules={{
+            required: "Es campo es obligatorio",
+          }}
+        />
+        {servicioQuote === "cod" && (
+          <>
+            <h3>Datos de Cuenta Bancaria</h3>
+            <Controller
+              name="banco"
+              control={control}
+              render={({ field, fieldState: { invalid, error } }) => (
+                <Select
+                  {...field}
+                  isRequired
+                  variant="bordered"
+                  label="Banco"
+                  value={field.value}
+                  isInvalid={invalid}
+                  errorMessage={error?.message}
+                >
+                  {bancos.map(({ label }) => (
+                    <SelectItem key={label}>{label}</SelectItem>
+                  ))}
+                </Select>
+              )}
+              rules={{
+                required: "Debes Seleccionar un Banco",
+              }}
+            />
+            <Controller
+              name="tipoCuenta"
+              control={control}
+              render={({ field, fieldState: { invalid, error } }) => (
+                <Select
+                  {...field}
+                  isRequired
+                  variant="bordered"
+                  label="Tipo de Cuenta"
+                  value={field.value}
+                  isInvalid={invalid}
+                  errorMessage={error?.message}
+                >
+                  {tipoCuenta.map(({ label }) => (
+                    <SelectItem key={label}>{label}</SelectItem>
+                  ))}
+                </Select>
+              )}
+              rules={{
+                required: "Debes Seleccionar un Tipo de Cuenta",
+              }}
+            />
+            <Controller
+              name="numeroCuenta"
+              control={control}
+              render={({ field, fieldState: { invalid, error } }) => (
+                <Input
+                  {...field}
+                  isRequired
+                  type="number"
+                  variant="bordered"
+                  label="Número de Cuenta"
+                  isInvalid={invalid}
+                  errorMessage={error?.message}
+                  description={
+                    <p className="text-primary">
+                      Ingresa número de cuenta sin guiones
+                    </p>
+                  }
+                />
+              )}
+              rules={{
+                required: "Debe Ingresar un Número de Cuenta",
+              }}
+            />
+            <Controller
+              name="nombreCuenta"
+              control={control}
+              render={({ field, fieldState: { invalid, error } }) => (
+                <Input
+                  {...field}
+                  isRequired
+                  type="text"
+                  variant="bordered"
+                  label="Nombre de Cuenta"
+                  isInvalid={invalid}
+                  errorMessage={error?.message}
+                />
+              )}
+              rules={{
+                required: "Debe Ingresar Nombre de Cuenta",
+              }}
+            />
+          </>
+        )}
+        <Button
+          type="submit"
+          variant="shadow"
+          color="primary"
+          className="my-5 uppercase text-white"
+          endContent={<PackageCheck size={20} />}
+        >
+          Enviar Solicitud
+        </Button>
       </Form>
     </main>
   );
