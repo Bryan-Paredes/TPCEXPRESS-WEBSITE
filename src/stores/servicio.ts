@@ -2,14 +2,14 @@ import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
 interface FormState {
-    servicioQuote: string | '';
-    origenQuote: string | '';
-    destinoQuote: string | '';
-    queEnviasQuote: string | '';
-    cantidadPaquetesQuote: string | '';
-    pesoQuote: string | '';
-    precioProductoQuote: string | '';
-    dondePagaQuote: string | '';
+    servicioQuote: string;
+    origenQuote: string;
+    destinoQuote: string;
+    queEnviasQuote: string;
+    cantidadPaquetesQuote: number;
+    pesoQuote: string;
+    precioProductoQuote: number;
+    dondePagaQuote: boolean;
 }
 
 interface FormActions {
@@ -27,10 +27,10 @@ export const useCotizacionStore = create(
             origenQuote: '',
             destinoQuote: '',
             queEnviasQuote: '',
-            cantidadPaquetesQuote: '',
+            cantidadPaquetesQuote: 0,
             pesoQuote: '',
-            precioProductoQuote: '',
-            dondePagaQuote: '',
+            precioProductoQuote: 0,
+            dondePagaQuote: false,
 
             // Método para actualizar el servicio seleccionado
             setServicioQuote: (newState) => set({ servicioQuote: newState }),
@@ -49,10 +49,10 @@ export const useCotizacionStore = create(
                     origenQuote: '',
                     destinoQuote: '',
                     queEnviasQuote: '',
-                    cantidadPaquetesQuote: '',
+                    cantidadPaquetesQuote: 0,
                     pesoQuote: '',
-                    precioProductoQuote: '',
-                    dondePagaQuote: '',
+                    precioProductoQuote: 0,
+                    dondePagaQuote: false,
                 })),
 
             // Método para guardar todo el formulario
