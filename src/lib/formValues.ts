@@ -5,5 +5,5 @@ export const FormQuoteValues = {
     cantidadPaquetesQuote: "",
     pesoQuote: "",
     precioProductoQuote: "",
-    dondePagaQuote: "",
+    dondePagaQuote: '',
 };

@@ -24,7 +24,7 @@ export default function QuoteModal({ isOpen, setIsOpen }: any) {
     servicioQuote,
   } = useCotizacionStore();
 
-  console.log(origenQuote);
+  console.log(dondePagaQuote);
 
   return (
     <>
@@ -63,8 +63,8 @@ export default function QuoteModal({ isOpen, setIsOpen }: any) {
 
                 {servicioQuote === "estandar" && (
                   <p className="uppercase font-bold">
-                    <span className="text-primary">Tipo de Pago: </span>
-                    {dondePagaQuote}
+                    <span className="text-primary">Pago en Destino: </span>
+                    {dondePagaQuote ? "Si" : "NO"}
                   </p>
                 )}
 
@@ -73,10 +73,10 @@ export default function QuoteModal({ isOpen, setIsOpen }: any) {
                   <span>
                     Q
                     {calculateQuote(
-                      Number(cantidadPaquetesQuote),
-                      Number(precioProductoQuote),
-                      servicioQuote === "estandar" &&
-                        dondePagaQuote === "destino"
+                      cantidadPaquetesQuote,
+                      precioProductoQuote,
+                      dondePagaQuote,
+                      servicioQuote
                     )}
                   </span>
                 </p>

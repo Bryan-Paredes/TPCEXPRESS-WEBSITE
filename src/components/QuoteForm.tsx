@@ -2,11 +2,10 @@ import { deliveryOptions, packageOptions } from "@/config/site";
 import {
   Form,
   Input,
-  RadioGroup,
-  Radio,
   Select,
   SelectItem,
   Button,
+  Switch,
 } from "@nextui-org/react";
 import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
@@ -192,25 +191,12 @@ export default function QuoteForm() {
           <Controller
             control={control}
             name="dondePagaQuote"
-            render={({ field, fieldState: { invalid, error } }) => (
-              <RadioGroup
-                {...field}
-                isRequired
-                errorMessage={error?.message}
-                validationBehavior="aria"
-                isInvalid={invalid}
-                label="Donde deseas pagar?"
-                name="Pago"
-                value={field.value}
-                onValueChange={field.onChange}
-              >
-                <Radio value="origen">Origen</Radio>
-                <Radio value="destino">Destino (+Q3.00)</Radio>
-              </RadioGroup>
+            render={({ field }) => (
+              <div className="flex items-center justify-center gap-2">
+                <label>Desea pagar en destino? (+Q3.00)</label>
+                <Switch {...field} aria-label="dondePagaQuote" />
+              </div>
             )}
-            rules={{
-              required: "Debes Seleccionar el Pago",
-            }}
           />
         )}
         <div className="flex flex-col sm:flex-row justify-center items-start sm:items-center sm:gap-3">
