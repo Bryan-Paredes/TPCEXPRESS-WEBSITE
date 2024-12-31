@@ -274,10 +274,11 @@ export default function ShipSection() {
           control={control}
           render={({ field, fieldState: { invalid, error } }) => (
             <Input
+              {...field}
               isRequired
               type="text"
               variant="bordered"
-              label="Nombre"
+              label="Nombre de Factura"
               isInvalid={invalid}
               errorMessage={error?.message}
             />
