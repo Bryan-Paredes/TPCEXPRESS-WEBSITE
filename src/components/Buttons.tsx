@@ -45,18 +45,6 @@ function ServiceButton() {
       >
         Cotización
       </Button>
-      <Button
-        as={Link}
-        size="lg"
-        variant="solid"
-        color="primary"
-        radius="lg"
-        href="/envio"
-        className="text-white"
-        startContent={<SendServiceIcon size={50} />}
-      >
-        Solicitar Servicio
-      </Button>
     </div>
   );
 }
