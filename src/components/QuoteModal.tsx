@@ -24,8 +24,6 @@ export default function QuoteModal({ isOpen, setIsOpen }: any) {
     servicioQuote,
   } = useCotizacionStore();
 
-  console.log(dondePagaQuote);
-
   return (
     <>
       <Modal isOpen={isOpen} backdrop="blur">
