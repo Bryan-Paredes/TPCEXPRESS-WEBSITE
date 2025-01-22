@@ -54,7 +54,6 @@ export default function ShipSection() {
 
   const onSubmit: SubmitHandler<ShipInputs> = async (data) => {
     try {
-      console.log(data);
       const response = await sendShip(data);
 
       if (response.success) {
