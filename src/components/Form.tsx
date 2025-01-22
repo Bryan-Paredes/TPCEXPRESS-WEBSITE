@@ -38,6 +38,7 @@ export default async function FormComponent() {
       }
     } catch (error) {
       toast.error("¡Ha ocurrido un error en la solicitud!");
+    } finally {
     }
   };
 
@@ -86,7 +87,11 @@ export default async function FormComponent() {
             />
           )}
           rules={{
-            required: "Debes Ingresar Correo Electrónico",
+            required: "Debe ingresar su correo",
+            pattern: {
+              value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+              message: "Direccion de correo electrónico NO válida",
+            },
           }}
         />
         <Controller
@@ -103,10 +108,21 @@ export default async function FormComponent() {
               variant="bordered"
               errorMessage={error?.message}
               isInvalid={invalid}
+              description={
+                <p className="text-primary">
+                  Ingresa número de teléfono sin guiones
+                </p>
+              }
             />
           )}
           rules={{
-            required: "Debes Ingresar Número de Teléfono",
+            required: "Debe ingresar su número",
+            validate: (value) => {
+              if (!/^\d{8}$/.test(value)) {
+                return "El número debe tener 8 dígitos";
+              }
+              return true;
+            },
           }}
         />
         <Controller
@@ -154,26 +170,32 @@ export default async function FormComponent() {
             required: "Debes Ingresar Mensaje",
           }}
         />
-        <Controller
-          control={control}
-          name="terms"
-          render={({ field, fieldState: { invalid } }) => (
-            <Checkbox
-              {...field}
-              isRequired
-              isInvalid={invalid}
-              icon={<BadgeCheck />}
-            >
-              Aceptar
-              <Link href="/terminos" underline="hover" className="ml-2">
-                Términos de Servicio
-              </Link>
-            </Checkbox>
-          )}
-          rules={{
-            required: "Debes Aceptar Términos de Servicio",
-          }}
-        />
+        <div className="flex items-center justify-center gap-2">
+          <Controller
+            control={control}
+            name="terms"
+            render={({ field, fieldState: { invalid } }) => (
+              <Checkbox
+                {...field}
+                isRequired
+                isInvalid={invalid}
+                icon={<BadgeCheck />}
+                className="my-5"
+              >
+                Acepto
+              </Checkbox>
+            )}
+            rules={{
+              required: "Debes Aceptar Términos de Servicio",
+            }}
+          />
+          <a
+            href="/terminos"
+            className="text-primary font-bold hover:underline"
+          >
+            Términos de Servicio
+          </a>
+        </div>
         <Button
           type="submit"
           color="primary"

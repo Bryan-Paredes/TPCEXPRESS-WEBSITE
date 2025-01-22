@@ -8,21 +8,70 @@ import {
   Select,
   SelectItem,
   Textarea,
+  Link,
+  Checkbox,
 } from "@nextui-org/react";
-import { Controller, useForm } from "react-hook-form";
-import { PackageCheck } from "lucide-react";
+import { Controller, useForm, type SubmitHandler } from "react-hook-form";
+import { BadgeCheck, PackageCheck } from "lucide-react";
+import { sendShip } from "@/api/email";
+import { toast, Toaster } from "sonner";
+import confetti from "canvas-confetti";
+import { useEffect } from "react";
+
+interface ShipInputs {
+  origenEnvio: string;
+  nombreEnvio: string;
+  numeroRemitente: string;
+  correoRemitente: string;
+  direccionRemitente: string;
+  textRecoleccion?: string;
+  origenDestino: string;
+  nombreDestino: string;
+  numeroDestino: string;
+  correoDestino: string;
+  direccionDestino: string;
+  textDestino?: string;
+  nit?: string;
+  nombreNit?: string;
+  banco?: string;
+  tipoCuenta?: string;
+  numeroCuenta?: string;
+  nombreCuenta?: string;
+  terms: boolean;
+}
 
 export default function ShipSection() {
   const { origenQuote, servicioQuote, destinoQuote } = useCotizacionStore();
 
-  const { handleSubmit, control } = useForm();
+  const { handleSubmit, control, setValue } = useForm<ShipInputs>({
+    defaultValues: { origenEnvio: origenQuote, origenDestino: origenQuote },
+  });
 
-  const onSubmit = (data: any) => {
-    console.log(data);
+  useEffect(() => {
+    setValue("origenEnvio", origenQuote);
+    setValue("origenDestino", destinoQuote);
+  }, [origenQuote, destinoQuote, setValue]);
+
+  const onSubmit: SubmitHandler<ShipInputs> = async (data) => {
+    try {
+      console.log(data);
+      const response = await sendShip(data);
+
+      if (response.success) {
+        toast.success("¡Mensaje enviado exitosamente!");
+        confetti({ angle: 60 });
+      } else {
+        toast.error("¡Ha ocurrido un error al enviar el mensaje!");
+      }
+    } catch (error) {
+      toast.error("¡Ha ocurrido un error en la solicitud!");
+    } finally {
+    }
   };
 
   return (
     <main className="px-8 sm:px-0">
+      <Toaster richColors position="top-right" />
       <h3 className="text-lg font-bold my-4">
         Servicio Solcitado:{" "}
         <span className="text-primary uppercase">{servicioQuote}</span>
@@ -33,16 +82,13 @@ export default function ShipSection() {
         <Controller
           name="origenEnvio"
           control={control}
-          defaultValue={origenQuote}
           render={({ field }) => (
             <Input
               {...field}
               isRequired
               isDisabled
-              // isDisabled={origenQuote ? true : false}
               label="Origen"
               variant="bordered"
-              value={origenQuote}
             />
           )}
         />
@@ -142,14 +188,22 @@ export default function ShipSection() {
         />
         <Divider className="my-5" />
         <h3 className="uppercase font-bold">Información de Destinatario</h3>
-        <Input
-          isRequired
-          isDisabled={destinoQuote ? true : false}
-          type="text"
-          label="Destino"
-          variant="bordered"
-          value={destinoQuote}
+        <Controller
+          name="origenDestino"
+          control={control}
+          defaultValue={origenQuote}
+          render={({ field }) => (
+            <Input
+              isRequired
+              isDisabled
+              type="text"
+              label="Destino"
+              variant="bordered"
+              value={destinoQuote}
+            />
+          )}
         />
+
         <Controller
           name="nombreDestino"
           control={control}
@@ -377,6 +431,31 @@ export default function ShipSection() {
             />
           </>
         )}
+        <div className="flex items-center justify-center gap-2 my-3">
+          <Controller
+            control={control}
+            name="terms"
+            render={({ field, fieldState: { invalid } }) => (
+              <Checkbox
+                {...field}
+                isRequired
+                isInvalid={invalid}
+                icon={<BadgeCheck />}
+              >
+                Acepto
+              </Checkbox>
+            )}
+            rules={{
+              required: "Debes Aceptar Términos de Servicio",
+            }}
+          />
+          <a
+            href="/terminos"
+            className="text-primary font-bold hover:underline"
+          >
+            Términos de Servicio
+          </a>
+        </div>
         <Button
           type="submit"
           variant="shadow"
