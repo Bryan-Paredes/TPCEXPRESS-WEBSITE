@@ -118,10 +118,10 @@ export default function NavBar() {
             href="/contacto"
             color="primary"
             variant="ghost"
-            className=" text-base font-bold"
+            className="text-base font-bold cursor-pointer"
             startContent={<Mails size={20} />}
           >
-            Contacto
+            Contactanos
           </Button>
         </NavbarItem>
       </NavbarContent>
