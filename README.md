@@ -13,3 +13,4 @@ Este proyecto fue rediseñado y optimizado para mejorar la presencia digital de 
 [![Astro](https://astro.build)]
 [![TailwindCss](https://tailwindcss.com)]
 [![React JS](https://es.react.dev)]
+asd
