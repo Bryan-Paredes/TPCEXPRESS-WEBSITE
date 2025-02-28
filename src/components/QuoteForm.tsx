@@ -111,7 +111,7 @@ export default function QuoteForm() {
               name={field.name}
               variant="bordered"
               description={
-                <p className="text-primary">El máximo es 5 paquetes</p>
+                <p className="text-primary">El máximo es 10 paquetes</p>
               }
             />
           )}
