@@ -88,7 +88,7 @@ export default function QuoteForm() {
               isInvalid={invalid}
             >
               {packageOptions.map(({ key, label }) => (
-                <SelectItem key={label}>{label}</SelectItem>
+                <SelectItem key={key}>{label}</SelectItem>
               ))}
             </Select>
           )}
@@ -102,7 +102,7 @@ export default function QuoteForm() {
               {...field}
               isRequired
               type="number"
-              max={5}
+              max={10}
               min={1}
               errorMessage={error?.message}
               validationBehavior="aria"
@@ -117,7 +117,7 @@ export default function QuoteForm() {
           )}
           rules={{
             min: { value: 1, message: "El valor debe ser mayor a 0" },
-            max: { value: 5, message: "El valor debe ser menor a 5" },
+            max: { value: 10, message: "El valor debe ser menor a 10" },
             validate: (value) => {
               const numValue = Number(value);
               return !isNaN(numValue) || "Ingrese un valor valido";

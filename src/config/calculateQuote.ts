@@ -3,7 +3,7 @@ function calculateQuote(packageCount: number, productPrice: number, payAtDestina
 
     const isPayDestination = service === 'cod' ? true : payAtDestination
 
-    const packagePrice: number = 30; // Price per package
+    const packagePrice: number = 40; // Price per package
     const insuranceRate: number = 0.01; // 1% insurance
     const destinationCharge: number = 3; // Charge for pay-at-destination
 
