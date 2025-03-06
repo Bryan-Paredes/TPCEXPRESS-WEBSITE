@@ -54,16 +54,23 @@ export default function ShipSection() {
     setValue,
     formState: { isSubmitting },
   } = useForm<ShipInputs>({
-    defaultValues: { origenEnvio: origenQuote, origenDestino: origenQuote },
+    defaultValues: {
+      origenEnvio: origenQuote,
+      origenDestino: origenQuote,
+      total: setTotal,
+    },
   });
 
   useEffect(() => {
     setValue("origenEnvio", origenQuote);
     setValue("origenDestino", destinoQuote);
-  }, [origenQuote, destinoQuote, setValue]);
+    setValue("total", setTotal);
+  }, [origenQuote, destinoQuote, setTotal, setValue]);
 
   const onSubmit: SubmitHandler<ShipInputs> = async (data) => {
     try {
+      console.log(data);
+
       const response = await sendShip(data);
 
       if (response.success) {
@@ -222,6 +229,7 @@ export default function ShipSection() {
           defaultValue={origenQuote}
           render={({ field }) => (
             <Input
+              {...field}
               isRequired
               isDisabled
               type="text"

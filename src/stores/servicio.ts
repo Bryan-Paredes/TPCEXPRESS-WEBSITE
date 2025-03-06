@@ -65,10 +65,18 @@ export const useCotizacionStore = create<FormState & FormActions>()(
                     pesoQuote: '',
                     precioProductoQuote: 0,
                     dondePagaQuote: false,
+                    setTotal: 0,
                 })),
 
             // Método para guardar todo el formulario
-            submitFormQuote: (data) => set(() => ({ ...data })),
+            submitFormQuote: (data) => {
+                set(() => ({
+                    ...data,
+                    setTotal: get().calculateQuote(),
+                }))
+
+            },
+
 
             // Método para calcular el total de la cotización
             calculateQuote: () => {
@@ -77,6 +85,7 @@ export const useCotizacionStore = create<FormState & FormActions>()(
                 const total = calculateQuote(state.cantidadPaquetesQuote, state.precioProductoQuote, state.dondePagaQuote, state.servicioQuote);
 
                 set(() => ({ setTotal: total }));
+
                 return total;
             },
         }),
