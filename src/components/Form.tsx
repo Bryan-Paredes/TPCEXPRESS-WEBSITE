@@ -28,8 +28,8 @@ export default async function FormComponent() {
 
   const onSubmit: SubmitHandler<FormInputs> = async (data) => {
     try {
-      const response = await sendEmail(data);
       toast.loading("Enviando tu solicitud...");
+      const response = await sendEmail(data);
       if (response.success) {
         toast.success("¡Mensaje enviado exitosamente!");
         confetti({ angle: 60 });
