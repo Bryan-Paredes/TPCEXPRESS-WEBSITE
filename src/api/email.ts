@@ -48,6 +48,7 @@ export const sendShip = async (data: {
   numeroCuenta?: string;
   nombreCuenta?: string;
   terms: boolean;
+  total: number;
 }): Promise<{ success: boolean; message: string }> => {
   try {
     const response = await fetch('https://email-server-tpcexpress.onrender.com/sendEnvio', {
@@ -59,12 +60,16 @@ export const sendShip = async (data: {
     });
 
     if (!response.ok) {
+      console.log(response.body);
+
       throw new Error(`Error al enviar el correo: ${response.status}`);
     }
 
     return await response.json();
 
   } catch (error) {
+    console.log(error);
+
     throw new Error(`Error al enviar el correo: ${error}`);
   }
 }
