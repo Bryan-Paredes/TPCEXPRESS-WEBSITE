@@ -5,7 +5,6 @@ import {
   Checkbox,
   Form,
   Input,
-  Link,
   Select,
   SelectItem,
   Textarea,
@@ -29,6 +28,7 @@ export default async function FormComponent() {
 
   const onSubmit: SubmitHandler<FormInputs> = async (data) => {
     try {
+      toast.loading("Enviando tu solicitud...");
       const response = await sendEmail(data);
       if (response.success) {
         toast.success("¡Mensaje enviado exitosamente!");
@@ -51,14 +51,12 @@ export default async function FormComponent() {
       "
       >
         <Controller
-          control={control}
           name="name"
+          control={control}
           render={({ field, fieldState: { invalid, error } }) => (
             <Input
               {...field}
               isRequired
-              isClearable
-              type="text"
               label="Nombre Completo"
               name="name"
               variant="bordered"
@@ -71,8 +69,8 @@ export default async function FormComponent() {
           }}
         />
         <Controller
-          control={control}
           name="email"
+          control={control}
           render={({ field, fieldState: { invalid, error } }) => (
             <Input
               {...field}
@@ -95,8 +93,8 @@ export default async function FormComponent() {
           }}
         />
         <Controller
-          control={control}
           name="phone"
+          control={control}
           render={({ field, fieldState: { invalid, error } }) => (
             <Input
               {...field}
@@ -126,8 +124,8 @@ export default async function FormComponent() {
           }}
         />
         <Controller
-          control={control}
           name="interes"
+          control={control}
           render={({ field, fieldState: { invalid, error } }) => (
             <Select
               {...field}
@@ -152,8 +150,8 @@ export default async function FormComponent() {
           }}
         />
         <Controller
-          control={control}
           name="message"
+          control={control}
           render={({ field, fieldState: { invalid, error } }) => (
             <Textarea
               {...field}
@@ -172,8 +170,8 @@ export default async function FormComponent() {
         />
         <div className="flex items-center justify-center gap-2">
           <Controller
-            control={control}
             name="terms"
+            control={control}
             render={({ field, fieldState: { invalid } }) => (
               <Checkbox
                 {...field}
