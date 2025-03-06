@@ -20,11 +20,12 @@ export default function QuoteForm() {
     defaultValues: FormQuoteValues,
   });
 
-  const { servicioQuote, submitFormQuote, resetFormQuote } =
+  const { servicioQuote, submitFormQuote, resetFormQuote, calculateQuote } =
     useCotizacionStore();
 
   const onSubmit = (data: any) => {
     submitFormQuote(data);
+    calculateQuote();
     setIsOpen(true);
   };
 

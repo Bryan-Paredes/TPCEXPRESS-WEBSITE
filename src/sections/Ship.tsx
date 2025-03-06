@@ -8,15 +8,16 @@ import {
   Select,
   SelectItem,
   Textarea,
-  Link,
   Checkbox,
+  Chip,
 } from "@nextui-org/react";
 import { Controller, useForm, type SubmitHandler } from "react-hook-form";
 import { BadgeCheck, PackageCheck } from "lucide-react";
 import { sendShip } from "@/api/email";
 import { toast, Toaster } from "sonner";
 import confetti from "canvas-confetti";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import HomeModal from "@/components/HomeModal";
 
 interface ShipInputs {
   origenEnvio: string;
@@ -38,12 +39,21 @@ interface ShipInputs {
   numeroCuenta?: string;
   nombreCuenta?: string;
   terms: boolean;
+  total: number;
 }
 
 export default function ShipSection() {
-  const { origenQuote, servicioQuote, destinoQuote } = useCotizacionStore();
+  const { origenQuote, servicioQuote, destinoQuote, setTotal } =
+    useCotizacionStore();
 
-  const { handleSubmit, control, setValue } = useForm<ShipInputs>({
+  const [openModal, setOpenModal] = useState(true);
+
+  const {
+    handleSubmit,
+    control,
+    setValue,
+    formState: { isSubmitting },
+  } = useForm<ShipInputs>({
     defaultValues: { origenEnvio: origenQuote, origenDestino: origenQuote },
   });
 
@@ -54,11 +64,13 @@ export default function ShipSection() {
 
   const onSubmit: SubmitHandler<ShipInputs> = async (data) => {
     try {
+      toast.loading("Enviando tu solicitud...");
       const response = await sendShip(data);
 
       if (response.success) {
         toast.success("¡Mensaje enviado exitosamente!");
         confetti({ angle: 60 });
+        setIsOpen(true);
       } else {
         toast.error("¡Ha ocurrido un error al enviar el mensaje!");
       }
@@ -71,12 +83,30 @@ export default function ShipSection() {
   return (
     <main className="px-8 sm:px-0">
       <Toaster richColors position="top-right" />
-      <h3 className="text-lg font-bold my-4">
-        Servicio Solcitado:{" "}
-        <span className="text-primary uppercase">{servicioQuote}</span>
-      </h3>
-      <Divider className="my-5" />
+      <div className="flex flex-col">
+        <h3 className="text-lg font-bold my-4">
+          Servicio Solcitado:{" "}
+          <span className="text-primary uppercase">{servicioQuote}</span>
+        </h3>
+      </div>
       <Form onSubmit={handleSubmit(onSubmit)}>
+        <Controller
+          name="total"
+          control={control}
+          render={({ field }) => (
+            <Chip
+              {...field}
+              size="md"
+              variant="dot"
+              color="primary"
+              className="text-lg font-black capitalize"
+            >
+              <span className="text-lg font-bold capitalize">Total: </span>
+              <span className="text-primary font-bold">Q{setTotal}</span>
+            </Chip>
+          )}
+        />
+        <Divider className="my-5" />
         <h3 className="uppercase font-bold">Información de Remitente</h3>
         <Controller
           name="origenEnvio"
@@ -456,15 +486,17 @@ export default function ShipSection() {
           </a>
         </div>
         <Button
+          isLoading={isSubmitting}
           type="submit"
           variant="shadow"
           color="primary"
           className="my-5 uppercase text-white"
-          endContent={<PackageCheck size={20} />}
+          endContent={isSubmitting ? null : <PackageCheck size={20} />}
         >
-          Enviar Solicitud
+          {isSubmitting ? "Enviando..." : "Enviar Solicitud"}
         </Button>
       </Form>
+      <HomeModal isOpen={openModal} />
     </main>
   );
 }

@@ -1,4 +1,4 @@
-function calculateQuote(packageCount: number, productPrice: number, payAtDestination: boolean, service: string): number {
+export default function calculateQuote(packageCount: number, productPrice: number, payAtDestination: boolean, service: string): number {
     let totalCost: number;
 
     const isPayDestination = service === 'cod' ? true : payAtDestination
@@ -23,5 +23,3 @@ function calculateQuote(packageCount: number, productPrice: number, payAtDestina
 
     return Math.round(totalCost)
 }
-
-export default calculateQuote;

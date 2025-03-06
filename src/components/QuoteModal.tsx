@@ -1,4 +1,3 @@
-import calculateQuote from "@/config/calculateQuote";
 import doc from "@/config/pdf";
 import {
   Button,
@@ -22,6 +21,7 @@ export default function QuoteModal({ isOpen, setIsOpen }: any) {
     precioProductoQuote,
     dondePagaQuote,
     servicioQuote,
+    setTotal,
   } = useCotizacionStore();
 
   return (
@@ -68,15 +68,7 @@ export default function QuoteModal({ isOpen, setIsOpen }: any) {
 
                 <p className="uppercase font-bold text-xl text-green-600">
                   <span className="">Total: </span>
-                  <span>
-                    Q
-                    {calculateQuote(
-                      cantidadPaquetesQuote,
-                      precioProductoQuote,
-                      dondePagaQuote,
-                      servicioQuote
-                    )}
-                  </span>
+                  <span>Q{setTotal}</span>
                 </p>
               </>
             </ModalBody>
