@@ -46,7 +46,7 @@ export default function ShipSection() {
   const { origenQuote, servicioQuote, destinoQuote, setTotal } =
     useCotizacionStore();
 
-  const [openModal, setOpenModal] = useState(true);
+  const [openModal, setOpenModal] = useState(false);
 
   const {
     handleSubmit,
@@ -64,13 +64,12 @@ export default function ShipSection() {
 
   const onSubmit: SubmitHandler<ShipInputs> = async (data) => {
     try {
-      toast.loading("Enviando tu solicitud...");
       const response = await sendShip(data);
 
       if (response.success) {
         toast.success("¡Mensaje enviado exitosamente!");
         confetti({ angle: 60 });
-        setIsOpen(true);
+        setOpenModal(true);
       } else {
         toast.error("¡Ha ocurrido un error al enviar el mensaje!");
       }
