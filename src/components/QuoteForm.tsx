@@ -12,6 +12,7 @@ import { Controller, useForm } from "react-hook-form";
 import QuoteModal from "./QuoteModal";
 import { useCotizacionStore } from "@/stores/servicio";
 import { FormQuoteValues } from "@/lib/formValues";
+import { formatMonto } from "@/config/formatMonto";
 
 export default function QuoteForm() {
   const [isOpen, setIsOpen] = useState(false);
@@ -168,18 +169,40 @@ export default function QuoteForm() {
               errorMessage={error?.message}
               validationBehavior="aria"
               isInvalid={invalid}
-              label="Precio de producto a cobrar Q"
+              label="Precio de producto a cobrar Q0.00"
               name="Precio"
               variant="bordered"
+              onChange={(e) => {
+                const rawValue = e.target.value.replace(/[^0-9.]/g, "");
+                field.onChange(rawValue);
+              }}
+              onBlur={(e) => {
+                field.onChange(formatMonto(e.target.value));
+              }}
+              value={field.value}
               {...(servicioQuote === "estandar"
                 ? {
                     description: (
-                      <p className="text-primary">
-                        Solicitamos el precio para calcular el costo del seguro
-                      </p>
+                      <>
+                        <p className="text-primary">
+                          Solicitamos el precio para calcular el costo del
+                          seguro
+                        </p>
+                        <p className="text-primary">
+                          Si desea ingresar un monto con decimal ponga un punto
+                          (.) en lugar de una coma (,)
+                        </p>
+                      </>
                     ),
                   }
-                : {})}
+                : {
+                    description: (
+                      <p className="text-primary">
+                        Si desea ingresar un monto con decimal ponga un punto
+                        (.) en lugar de una coma (,)
+                      </p>
+                    ),
+                  })}
             />
           )}
           rules={{
