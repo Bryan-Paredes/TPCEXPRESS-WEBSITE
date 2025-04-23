@@ -90,7 +90,7 @@ export default function QuoteForm() {
               isInvalid={invalid}
             >
               {packageOptions.map(({ key, label }) => (
-                <SelectItem key={key}>{label}</SelectItem>
+                <SelectItem key={label}>{label}</SelectItem>
               ))}
             </Select>
           )}

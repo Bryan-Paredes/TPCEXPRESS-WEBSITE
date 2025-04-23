@@ -18,33 +18,39 @@ import { toast, Toaster } from "sonner";
 import confetti from "canvas-confetti";
 import { useEffect, useState } from "react";
 import HomeModal from "@/components/HomeModal";
+import type { SolicitudEnvio } from "@/types/solicitudEnvio";
 
-interface ShipInputs {
-  origenEnvio: string;
-  nombreEnvio: string;
-  numeroRemitente: string;
-  correoRemitente: string;
-  direccionRemitente: string;
-  textRecoleccion?: string;
-  origenDestino: string;
-  nombreDestino: string;
-  numeroDestino: string;
-  correoDestino: string;
-  direccionDestino: string;
-  textDestino?: string;
-  nit?: string;
-  nombreNit?: string;
-  banco?: string;
-  tipoCuenta?: string;
-  numeroCuenta?: string;
-  nombreCuenta?: string;
-  terms: boolean;
-  total: number;
-}
+// interface ShipInputs {
+//   origenEnvio: string;
+//   nombreEnvio: string;
+//   numeroRemitente: string;
+//   correoRemitente: string;
+//   direccionRemitente: string;
+//   textRecoleccion?: string;
+//   origenDestino: string;
+//   nombreDestino: string;
+//   numeroDestino: string;
+//   correoDestino: string;
+//   direccionDestino: string;
+//   textDestino?: string;
+//   nit?: string;
+//   nombreNit?: string;
+//   banco?: string;
+//   tipoCuenta?: string;
+//   numeroCuenta?: string;
+//   nombreCuenta?: string;
+//   terms: boolean;
+//   total: number;
+// }
 
 export default function ShipSection() {
-  const { origenQuote, servicioQuote, destinoQuote, setTotal } =
-    useCotizacionStore();
+  const {
+    origenQuote,
+    servicioQuote,
+    destinoQuote,
+    setTotal,
+    cantidadPaquetesQuote,
+  } = useCotizacionStore();
 
   const [openModal, setOpenModal] = useState(false);
 
@@ -53,21 +59,21 @@ export default function ShipSection() {
     control,
     setValue,
     formState: { isSubmitting },
-  } = useForm<ShipInputs>({
+  } = useForm<SolicitudEnvio>({
     defaultValues: {
-      origenEnvio: origenQuote,
-      origenDestino: origenQuote,
-      total: setTotal,
+      ciudadOrigen: origenQuote,
+      ciudadDestino: origenQuote,
     },
   });
 
   useEffect(() => {
-    setValue("origenEnvio", origenQuote);
-    setValue("origenDestino", destinoQuote);
-    setValue("total", setTotal);
+    setValue("ciudadOrigen", origenQuote);
+    setValue("ciudadDestino", destinoQuote);
+    setValue("cantidadPaquetes", cantidadPaquetesQuote);
+    // setValue("total", setTotal);
   }, [origenQuote, destinoQuote, setTotal, setValue]);
 
-  const onSubmit: SubmitHandler<ShipInputs> = async (data) => {
+  const onSubmit: SubmitHandler<SolicitudEnvio> = async (data) => {
     try {
       console.log(data);
 
@@ -89,15 +95,24 @@ export default function ShipSection() {
   return (
     <main className="px-8 sm:px-0">
       <Toaster richColors position="top-right" />
-      <div className="flex flex-col">
-        <h3 className="text-lg font-bold my-4">
+      <div className="flex flex-col gap-2">
+        <h3 className="text-lg font-bold">
           Servicio Solcitado:{" "}
           <span className="text-primary uppercase">{servicioQuote}</span>
         </h3>
+        <Chip
+          size="md"
+          variant="dot"
+          color="primary"
+          className="text-lg font-black capitalize"
+        >
+          <span className="text-lg font-bold capitalize">Total: </span>
+          <span className="text-primary font-bold">Q{setTotal}</span>
+        </Chip>
       </div>
       <Form onSubmit={handleSubmit(onSubmit)}>
         <Controller
-          name="total"
+          name="cantidadPaquetes"
           control={control}
           render={({ field }) => (
             <Chip
@@ -105,17 +120,21 @@ export default function ShipSection() {
               size="md"
               variant="dot"
               color="primary"
-              className="text-lg font-black capitalize"
+              className="text-lg font-black capitalize my-3"
             >
-              <span className="text-lg font-bold capitalize">Total: </span>
-              <span className="text-primary font-bold">Q{setTotal}</span>
+              <span className="text-lg font-bold capitalize">
+                Cantidad de Paquetes:{" "}
+              </span>
+              <span className="text-primary font-bold">
+                {cantidadPaquetesQuote}
+              </span>
             </Chip>
           )}
         />
         <Divider className="my-5" />
         <h3 className="uppercase font-bold">Información de Remitente</h3>
         <Controller
-          name="origenEnvio"
+          name="ciudadOrigen"
           control={control}
           render={({ field }) => (
             <Input
@@ -128,7 +147,7 @@ export default function ShipSection() {
           )}
         />
         <Controller
-          name="nombreEnvio"
+          name="nombreRemitente"
           control={control}
           render={({ field, fieldState: { invalid, error } }) => (
             <Input
@@ -146,7 +165,7 @@ export default function ShipSection() {
           }}
         />
         <Controller
-          name="numeroRemitente"
+          name="telefonoRemitente"
           control={control}
           render={({ field, fieldState: { invalid, error } }) => (
             <Input
@@ -210,7 +229,7 @@ export default function ShipSection() {
           }}
         />
         <Controller
-          name="textRecoleccion"
+          name="obsRemitente"
           control={control}
           render={({ field }) => (
             <Textarea
@@ -224,7 +243,7 @@ export default function ShipSection() {
         <Divider className="my-5" />
         <h3 className="uppercase font-bold">Información de Destinatario</h3>
         <Controller
-          name="origenDestino"
+          name="ciudadDestino"
           control={control}
           defaultValue={origenQuote}
           render={({ field }) => (
@@ -241,7 +260,7 @@ export default function ShipSection() {
         />
 
         <Controller
-          name="nombreDestino"
+          name="nombreDestinatario"
           control={control}
           render={({ field, fieldState: { invalid, error } }) => (
             <Input
@@ -259,7 +278,7 @@ export default function ShipSection() {
           }}
         />
         <Controller
-          name="numeroDestino"
+          name="telefonoDestinatario"
           control={control}
           render={({ field, fieldState: { invalid, error } }) => (
             <Input
@@ -283,7 +302,7 @@ export default function ShipSection() {
           }}
         />
         <Controller
-          name="correoDestino"
+          name="correoDestinatario"
           control={control}
           render={({ field, fieldState: { invalid, error } }) => (
             <Input
@@ -305,7 +324,7 @@ export default function ShipSection() {
           }}
         />
         <Controller
-          name="direccionDestino"
+          name="direccionDestinatario"
           control={control}
           render={({ field, fieldState: { invalid, error } }) => (
             <Input
@@ -323,7 +342,7 @@ export default function ShipSection() {
           }}
         />
         <Controller
-          name="textDestino"
+          name="obsDestinatario"
           control={control}
           render={({ field }) => (
             <Textarea
@@ -360,7 +379,7 @@ export default function ShipSection() {
           }}
         />
         <Controller
-          name="nombreNit"
+          name="nombreFactura"
           control={control}
           render={({ field, fieldState: { invalid, error } }) => (
             <Input
@@ -470,7 +489,7 @@ export default function ShipSection() {
         <div className="flex items-center justify-center gap-2 my-3">
           <Controller
             control={control}
-            name="terms"
+            name="terminos"
             render={({ field, fieldState: { invalid } }) => (
               <Checkbox
                 {...field}

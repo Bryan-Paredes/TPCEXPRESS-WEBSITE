@@ -1,3 +1,6 @@
+import type { SolicitudEnvio } from "@/types/solicitudEnvio";
+import { API_TOKEN } from "astro:env/client";
+
 export const sendEmail = async (data: {
   name: string;
   email: string;
@@ -29,37 +32,19 @@ export const sendEmail = async (data: {
   }
 };
 
-export const sendShip = async (data: {
-  origenEnvio: string;
-  nombreEnvio: string;
-  numeroRemitente: string;
-  correoRemitente: string;
-  direccionRemitente: string;
-  textRecoleccion?: string;
-  origenDestino: string;
-  nombreDestino: string;
-  numeroDestino: string;
-  correoDestino: string;
-  direccionDestino: string;
-  textDestino?: string;
-  nit?: string;
-  nombreNit?: string;
-  banco?: string;
-  tipoCuenta?: string;
-  numeroCuenta?: string;
-  nombreCuenta?: string;
-  terms: boolean;
-  total: number;
-}): Promise<{ success: boolean; message: string }> => {
+
+
+export const sendShip = async (data: SolicitudEnvio): Promise<{ success: boolean; message: string }> => {
   try {
-    const response = await fetch('https://email-server-tpcexpress.onrender.com/sendEnvio', {
+    const response = await fetch('https://sistema.tpcxpress.com/api/solicitud', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        'Authorization': `Bearer ${API_TOKEN}`
       },
       body: JSON.stringify(data),
-      mode: 'cors',
     });
+
 
     if (!response.ok) {
       console.log(response.body);
@@ -67,7 +52,9 @@ export const sendShip = async (data: {
       throw new Error(`Error al enviar el correo: ${response.status}`);
     }
 
-    return await response.json();
+    const resData = await response.json();
+    console.log(resData);
+    return resData;
 
   } catch (error) {
     console.log(error);
