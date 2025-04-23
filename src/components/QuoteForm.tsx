@@ -180,7 +180,7 @@ export default function QuoteForm() {
                 field.onChange(formatMonto(e.target.value));
               }}
               value={field.value}
-              {...(servicioQuote === "estandar"
+              {...(servicioQuote === "ESTANDAR"
                 ? {
                     description: (
                       <>
@@ -211,7 +211,7 @@ export default function QuoteForm() {
             required: "Debes Seleccionar el Precio",
           }}
         />
-        {servicioQuote === "estandar" && (
+        {servicioQuote === "ESTANDAR" && (
           <Controller
             control={control}
             name="dondePagaQuote"

@@ -20,29 +20,6 @@ import { useEffect, useState } from "react";
 import HomeModal from "@/components/HomeModal";
 import type { SolicitudEnvio } from "@/types/solicitudEnvio";
 
-// interface ShipInputs {
-//   origenEnvio: string;
-//   nombreEnvio: string;
-//   numeroRemitente: string;
-//   correoRemitente: string;
-//   direccionRemitente: string;
-//   textRecoleccion?: string;
-//   origenDestino: string;
-//   nombreDestino: string;
-//   numeroDestino: string;
-//   correoDestino: string;
-//   direccionDestino: string;
-//   textDestino?: string;
-//   nit?: string;
-//   nombreNit?: string;
-//   banco?: string;
-//   tipoCuenta?: string;
-//   numeroCuenta?: string;
-//   nombreCuenta?: string;
-//   terms: boolean;
-//   total: number;
-// }
-
 export default function ShipSection() {
   const {
     origenQuote,
@@ -50,9 +27,11 @@ export default function ShipSection() {
     destinoQuote,
     setTotal,
     cantidadPaquetesQuote,
+    precioProductoQuote,
   } = useCotizacionStore();
 
   const [openModal, setOpenModal] = useState(false);
+  const [guia, setGuia] = useState<string | null>(null);
 
   const {
     handleSubmit,
@@ -70,25 +49,25 @@ export default function ShipSection() {
     setValue("ciudadOrigen", origenQuote);
     setValue("ciudadDestino", destinoQuote);
     setValue("cantidadPaquetes", cantidadPaquetesQuote);
+    setValue("costoProducto", precioProductoQuote);
+    setValue("tipoServicio", servicioQuote);
     // setValue("total", setTotal);
   }, [origenQuote, destinoQuote, setTotal, setValue]);
 
   const onSubmit: SubmitHandler<SolicitudEnvio> = async (data) => {
     try {
-      console.log(data);
-
       const response = await sendShip(data);
 
-      if (response.success) {
+      if (response.success && response.guia) {
         toast.success("¡Mensaje enviado exitosamente!");
         confetti({ angle: 60 });
+        setGuia(response.guia.guia.numeroGuia);
         setOpenModal(true);
       } else {
         toast.error("¡Ha ocurrido un error al enviar el mensaje!");
       }
     } catch (error) {
       toast.error("¡Ha ocurrido un error en la solicitud!");
-    } finally {
     }
   };
 
@@ -96,10 +75,10 @@ export default function ShipSection() {
     <main className="px-8 sm:px-0">
       <Toaster richColors position="top-right" />
       <div className="flex flex-col gap-2">
-        <h3 className="text-lg font-bold">
+        {/* <h3 className="text-lg font-bold">
           Servicio Solcitado:{" "}
           <span className="text-primary uppercase">{servicioQuote}</span>
-        </h3>
+        </h3> */}
         <Chip
           size="md"
           variant="dot"
@@ -111,6 +90,46 @@ export default function ShipSection() {
         </Chip>
       </div>
       <Form onSubmit={handleSubmit(onSubmit)}>
+        <Controller
+          name="tipoServicio"
+          control={control}
+          defaultValue={servicioQuote}
+          render={({ field }) => (
+            <Chip
+              {...field}
+              size="md"
+              variant="dot"
+              color="primary"
+              className="text-lg font-black capitalize my-3"
+            >
+              <h3 className="text-lg font-bold">
+                Servicio Solcitado:{" "}
+                <span className="text-primary uppercase">{servicioQuote}</span>
+              </h3>
+            </Chip>
+          )}
+        />
+        <Controller
+          name="costoProducto"
+          control={control}
+          defaultValue={precioProductoQuote}
+          render={({ field }) => (
+            <Chip
+              {...field}
+              size="md"
+              variant="dot"
+              color="primary"
+              className="text-lg font-black capitalize my-3"
+            >
+              <h3 className="text-lg font-bold">
+                Costo Producto:{" "}
+                <span className="text-primary uppercase">
+                  Q{precioProductoQuote}
+                </span>
+              </h3>
+            </Chip>
+          )}
+        />
         <Controller
           name="cantidadPaquetes"
           control={control}
@@ -522,7 +541,7 @@ export default function ShipSection() {
           {isSubmitting ? "Enviando..." : "Enviar Solicitud"}
         </Button>
       </Form>
-      <HomeModal isOpen={openModal} />
+      <HomeModal isOpen={openModal} guia={guia} />
     </main>
   );
 }

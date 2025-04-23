@@ -34,7 +34,7 @@ export const sendEmail = async (data: {
 
 
 
-export const sendShip = async (data: SolicitudEnvio): Promise<{ success: boolean; message: string }> => {
+export const sendShip = async (data: SolicitudEnvio): Promise<{ success: boolean; message: string, guia?: { guia: { numeroGuia: string, estado: string } } }> => {
   try {
     const response = await fetch('https://sistema.tpcxpress.com/api/solicitud', {
       method: 'POST',
@@ -45,16 +45,21 @@ export const sendShip = async (data: SolicitudEnvio): Promise<{ success: boolean
       body: JSON.stringify(data),
     });
 
+    const result = await response.json()
+
 
     if (!response.ok) {
-      console.log(response.body);
-
-      throw new Error(`Error al enviar el correo: ${response.status}`);
+      return {
+        success: false,
+        message: `Error al enviar el correo: ${result.message}`,
+      }
     }
 
-    const resData = await response.json();
-    console.log(resData);
-    return resData;
+    return {
+      success: true,
+      message: `Mensaje enviado exitosamente`,
+      guia: result
+    }
 
   } catch (error) {
     console.log(error);

@@ -98,8 +98,8 @@ export const coverage = [
 ]
 
 export const serviceOptions = [
-    { key: "cod", label: "COD" },
-    { key: "estandar", label: "ESTANDAR" },
+    { key: "COD", label: "COD" },
+    { key: "ESTANDAR", label: "ESTANDAR" },
 ];
 
 export const deliveryOptions = [

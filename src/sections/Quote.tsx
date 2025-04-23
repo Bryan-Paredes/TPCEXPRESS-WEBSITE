@@ -10,6 +10,8 @@ export default function QuoteSection() {
   );
 
   const handleSelectionChange = (e: any) => {
+    console.log(e.target.value);
+
     setServicioQuote(e.target.value);
   };
 

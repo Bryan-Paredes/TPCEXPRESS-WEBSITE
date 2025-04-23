@@ -8,7 +8,12 @@ import {
 } from "@nextui-org/react";
 import { BadgeCheck } from "lucide-react";
 
-export default function HomeModal({ isOpen }: any) {
+interface Props {
+  isOpen: boolean;
+  guia?: string | null;
+}
+
+export default function HomeModal({ isOpen, guia }: Props) {
   return (
     <>
       <Modal isOpen={isOpen} backdrop="opaque">
@@ -22,7 +27,15 @@ export default function HomeModal({ isOpen }: any) {
             <h3 className="text-lg font-bold">¡Listo!</h3>
           </ModalHeader>
           <ModalBody className="mx-auto">
-            <p>Gracias por tu solicitud, te responderemos en breve!</p>
+            <p className="capitalize">
+              Gracias por tu solicitud, tu numero de guia es:
+            </p>
+            <div className="border-1.5 border-primary rounded-md p-4 my-4">
+              <h1 className="flex flex-col gap-2 items-center justify-center">
+                Numero de Guia:
+                <span className="text-primary font-bold">{guia ?? "N/A"}</span>
+              </h1>
+            </div>
           </ModalBody>
           <ModalFooter>
             <a href="/quote">

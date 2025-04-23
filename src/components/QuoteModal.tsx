@@ -59,7 +59,7 @@ export default function QuoteModal({ isOpen, setIsOpen }: any) {
                   {precioProductoQuote}
                 </p>
 
-                {servicioQuote === "estandar" && (
+                {servicioQuote === "ESTANDAR" && (
                   <p className="uppercase font-bold">
                     <span className="text-primary">Pago en Destino: </span>
                     {dondePagaQuote ? "Si" : "NO"}
