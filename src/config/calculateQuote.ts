@@ -1,25 +1,36 @@
-export default function calculateQuote(packageCount: number, productPrice: number, payAtDestination: boolean, service: string): number {
-    let totalCost: number;
+export default function calculateQuote(costoProducto: number, pagaEnDestino: boolean, tipoServicio: string, ciudadOrigen: string, ciudadDestino: string): number {
 
-    const isPayDestination = service === 'cod' ? true : payAtDestination
 
-    const packagePrice: number = 45; // Price per package
-    const insuranceRate: number = 0.01; // 1% insurance
-    const destinationCharge: number = 3; // Charge for pay-at-destination
+    const ciudadesPerimetro = ['Mixco', 'Guatemala'] // 1=Mixco, 2=Guatemala
+
+    const enPerimetro = ciudadesPerimetro.includes(ciudadOrigen) && ciudadesPerimetro.includes(ciudadDestino)
+
+    // if (enPerimetro) {
+    //     return Math.round(costoProducto * 1.1)
+    // }
+
+
+    // let totalCost: number;
+
+
+    const isPayDestination = tipoServicio === 'COD' ? true : pagaEnDestino
+
+
+    const cantidadPaquetes: number = 1 // Cantidad de paquetes
+    const precioPorPaquete: number = enPerimetro ? 45 : 60; // Precio por paquete
+    const costoSeguro: number = 0.03; // 3% seguro
+    const cargoCostoDestino: number = 0.05; // 5% cargo al destino
 
     // Calculate base values
-    const packageTotal = Number(packageCount) * packagePrice;
-    const insurance = Number(productPrice) * insuranceRate;
-    const destinationFee = isPayDestination ? destinationCharge : 0;
+    const totalPorPaquete = cantidadPaquetes * precioPorPaquete;
+    const seguro = costoProducto * costoSeguro;
+    const cargoDestino = isPayDestination ? costoProducto * cargoCostoDestino : 0;
 
 
-    if (service === "cod") {
-        // Calculate total for COD service
-        totalCost = packageTotal + insurance + Number(productPrice) + destinationFee;
-    } else {
-        // Calculate total for standard service
-        totalCost = packageTotal + insurance + destinationFee;
-    }
+
+    // Calculate total for standard service
+    const totalCost: number = totalPorPaquete + seguro + cargoDestino;
+
 
     return Math.round(totalCost)
 }

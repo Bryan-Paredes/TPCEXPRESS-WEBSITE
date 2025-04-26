@@ -22,12 +22,11 @@ import type { SolicitudEnvio } from "@/types/solicitudEnvio";
 
 export default function ShipSection() {
   const {
-    origenQuote,
-    servicioQuote,
-    destinoQuote,
-    setTotal,
-    cantidadPaquetesQuote,
-    precioProductoQuote,
+    tipoServicio,
+    ciudadOrigen,
+    ciudadDestino,
+    costoServicio,
+    costoProducto,
   } = useCotizacionStore();
 
   const [openModal, setOpenModal] = useState(false);
@@ -40,23 +39,28 @@ export default function ShipSection() {
     formState: { isSubmitting },
   } = useForm<SolicitudEnvio>({
     defaultValues: {
-      ciudadOrigen: origenQuote,
-      ciudadDestino: origenQuote,
+      ciudadOrigen: ciudadOrigen,
+      ciudadDestino: ciudadDestino,
+      costoServicio: costoServicio,
     },
   });
 
   useEffect(() => {
-    setValue("ciudadOrigen", origenQuote);
-    setValue("ciudadDestino", destinoQuote);
-    setValue("cantidadPaquetes", cantidadPaquetesQuote);
-    setValue("costoProducto", precioProductoQuote);
-    setValue("tipoServicio", servicioQuote);
+    setValue("ciudadOrigen", ciudadOrigen);
+    setValue("ciudadDestino", ciudadDestino);
+    // setValue("cantidadPaquetes", cantidadPaquetesQuote);
+    setValue("costoProducto", costoProducto);
+    setValue("tipoServicio", tipoServicio);
+    setValue("costoServicio", costoServicio);
+    setValue("cantidadPaquetes", "1");
     // setValue("total", setTotal);
-  }, [origenQuote, destinoQuote, setTotal, setValue]);
+  }, [ciudadOrigen, ciudadDestino, costoServicio, setValue]);
 
   const onSubmit: SubmitHandler<SolicitudEnvio> = async (data) => {
     try {
       const response = await sendShip(data);
+
+      console.log(response);
 
       if (response.success && response.guia) {
         toast.success("¡Mensaje enviado exitosamente!");
@@ -74,63 +78,68 @@ export default function ShipSection() {
   return (
     <main className="px-8 sm:px-0">
       <Toaster richColors position="top-right" />
-      <div className="flex flex-col gap-2">
-        {/* <h3 className="text-lg font-bold">
-          Servicio Solcitado:{" "}
-          <span className="text-primary uppercase">{servicioQuote}</span>
-        </h3> */}
-        <Chip
-          size="md"
-          variant="dot"
-          color="primary"
-          className="text-lg font-black capitalize"
-        >
-          <span className="text-lg font-bold capitalize">Total: </span>
-          <span className="text-primary font-bold">Q{setTotal}</span>
-        </Chip>
-      </div>
+      <div className="flex flex-col gap-2"></div>
       <Form onSubmit={handleSubmit(onSubmit)}>
         <Controller
-          name="tipoServicio"
+          name="costoServicio"
           control={control}
-          defaultValue={servicioQuote}
+          defaultValue={costoServicio}
           render={({ field }) => (
             <Chip
               {...field}
               size="md"
               variant="dot"
               color="primary"
-              className="text-lg font-black capitalize my-3"
+              className="text-lg font-black capitalize"
             >
-              <h3 className="text-lg font-bold">
-                Servicio Solcitado:{" "}
-                <span className="text-primary uppercase">{servicioQuote}</span>
-              </h3>
+              <span className="text-lg font-bold capitalize">
+                Costo Servicio:{" "}
+              </span>
+              <span className="text-primary font-bold">Q{costoServicio}</span>
             </Chip>
           )}
         />
+
         <Controller
           name="costoProducto"
           control={control}
-          defaultValue={precioProductoQuote}
+          defaultValue={costoProducto}
           render={({ field }) => (
             <Chip
               {...field}
               size="md"
               variant="dot"
               color="primary"
-              className="text-lg font-black capitalize my-3"
+              className="text-lg font-black capitalize mt-3"
             >
               <h3 className="text-lg font-bold">
                 Costo Producto:{" "}
-                <span className="text-primary uppercase">
-                  Q{precioProductoQuote}
-                </span>
+                <span className="text-primary uppercase">Q{costoProducto}</span>
               </h3>
             </Chip>
           )}
         />
         <Controller
+          name="tipoServicio"
+          control={control}
+          defaultValue={tipoServicio}
+          render={({ field }) => (
+            <Chip
+              {...field}
+              size="md"
+              variant="dot"
+              color="primary"
+              className="text-lg font-black capitalize mt-1"
+            >
+              <h3 className="text-lg font-bold">
+                Servicio Solcitado:{" "}
+                <span className="text-primary uppercase">{tipoServicio}</span>
+              </h3>
+            </Chip>
+          )}
+        />
+
+        {/* <Controller
           name="cantidadPaquetes"
           control={control}
           render={({ field }) => (
@@ -149,7 +158,7 @@ export default function ShipSection() {
               </span>
             </Chip>
           )}
-        />
+        /> */}
         <Divider className="my-5" />
         <h3 className="uppercase font-bold">Información de Remitente</h3>
         <Controller
@@ -264,7 +273,7 @@ export default function ShipSection() {
         <Controller
           name="ciudadDestino"
           control={control}
-          defaultValue={origenQuote}
+          defaultValue={ciudadDestino}
           render={({ field }) => (
             <Input
               {...field}
@@ -273,7 +282,7 @@ export default function ShipSection() {
               type="text"
               label="Destino"
               variant="bordered"
-              value={destinoQuote}
+              value={ciudadDestino}
             />
           )}
         />
@@ -415,7 +424,7 @@ export default function ShipSection() {
             required: "Es campo es obligatorio",
           }}
         />
-        {servicioQuote === "cod" && (
+        {tipoServicio === "COD" && (
           <>
             <h3>Datos de Cuenta Bancaria</h3>
             <Controller

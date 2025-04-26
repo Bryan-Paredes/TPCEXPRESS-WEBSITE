@@ -1,7 +1,8 @@
 export interface SolicitudEnvio {
     tipoServicio: string;
+    costoServicio: number;
     costoProducto: number;
-    cantidadPaquetes: number;
+    cantidadPaquetes: string;
     ciudadOrigen: string;
     nombreRemitente: string;
     correoRemitente: string;

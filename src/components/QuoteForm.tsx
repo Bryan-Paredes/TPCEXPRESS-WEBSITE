@@ -8,24 +8,41 @@ import {
   Switch,
 } from "@nextui-org/react";
 import { useState } from "react";
-import { Controller, useForm } from "react-hook-form";
+import { Controller, useForm, type SubmitHandler } from "react-hook-form";
 import QuoteModal from "./QuoteModal";
 import { useCotizacionStore } from "@/stores/servicio";
-import { FormQuoteValues } from "@/lib/formValues";
 import { formatMonto } from "@/config/formatMonto";
+
+interface QuoteFormValues {
+  tipoServicio: string;
+  ciudadOrigen: string;
+  ciudadDestino: string;
+  tipoPaquete: string;
+  costoProducto: string;
+  dondePaga: boolean;
+  costoServicio: string;
+}
 
 export default function QuoteForm() {
   const [isOpen, setIsOpen] = useState(false);
 
-  const { control, handleSubmit, reset } = useForm({
-    defaultValues: FormQuoteValues,
-  });
+  const { control, handleSubmit, reset } = useForm<QuoteFormValues>();
 
-  const { servicioQuote, submitFormQuote, resetFormQuote, calculateQuote } =
+  const { tipoServicio, submitFormQuote, resetFormQuote, calculateQuote } =
     useCotizacionStore();
 
-  const onSubmit = (data: any) => {
-    submitFormQuote(data);
+  const onSubmit: SubmitHandler<QuoteFormValues> = (data) => {
+    const { costoProducto, costoServicio, ...rest } = data;
+
+    const newCost = Number(costoProducto);
+    const newTotal = Number(costoServicio);
+
+    submitFormQuote({
+      costoProducto: newCost,
+      costoServicio: newTotal,
+      cantidadPaquetes: 1,
+      ...rest,
+    });
     calculateQuote();
     setIsOpen(true);
   };
@@ -35,7 +52,7 @@ export default function QuoteForm() {
       <Form className="flex flex-col gap-2" onSubmit={handleSubmit(onSubmit)}>
         <Controller
           control={control}
-          name="origenQuote"
+          name="ciudadOrigen"
           render={({ field, fieldState: { invalid, error } }) => (
             <Select
               {...field}
@@ -56,7 +73,7 @@ export default function QuoteForm() {
         />
         <Controller
           control={control}
-          name="destinoQuote"
+          name="ciudadDestino"
           render={({ field, fieldState: { invalid, error } }) => (
             <Select
               {...field}
@@ -77,13 +94,13 @@ export default function QuoteForm() {
         />
         <Controller
           control={control}
-          name="queEnviasQuote"
+          name="tipoPaquete"
           render={({ field, fieldState: { invalid, error } }) => (
             <Select
               {...field}
               isRequired
               validationBehavior="aria"
-              label="Que Envías?"
+              label="Tipo de Paquete a Enviar"
               variant="bordered"
               value={field.value}
               errorMessage={error?.message}
@@ -98,69 +115,7 @@ export default function QuoteForm() {
         />
         <Controller
           control={control}
-          name="cantidadPaquetesQuote"
-          render={({ field, fieldState: { invalid, error } }) => (
-            <Input
-              {...field}
-              isRequired
-              type="number"
-              max={10}
-              min={1}
-              errorMessage={error?.message}
-              validationBehavior="aria"
-              isInvalid={invalid}
-              label="Cantidad de Paquetes"
-              name={field.name}
-              variant="bordered"
-              description={
-                <p className="text-primary">El máximo es 10 paquetes</p>
-              }
-            />
-          )}
-          rules={{
-            min: { value: 1, message: "El valor debe ser mayor a 0" },
-            max: { value: 10, message: "El valor debe ser menor a 10" },
-            validate: (value) => {
-              const numValue = Number(value);
-              return !isNaN(numValue) || "Ingrese un valor valido";
-            },
-            required: "Debes Seleccionar la Cantidad de Paquetes",
-          }}
-        />
-        <Controller
-          control={control}
-          name="pesoQuote"
-          render={({ field, fieldState: { invalid, error } }) => (
-            <Input
-              {...field}
-              isRequired
-              type="number"
-              max={10}
-              min={1}
-              errorMessage={error?.message}
-              validationBehavior="aria"
-              isInvalid={invalid}
-              label="Peso Total (lbs)"
-              name={field.name}
-              variant="bordered"
-              description={
-                <p className="text-primary">El peso máximo es 10 lbs</p>
-              }
-            />
-          )}
-          rules={{
-            min: { value: 1, message: "El valor debe ser mayor a 0 Lsb" },
-            max: { value: 10, message: "El valor debe ser menor a 10 Lsb" },
-            validate: (value) => {
-              const numValue = Number(value);
-              return !isNaN(numValue) || "Ingrese un valor valido";
-            },
-            required: "Debes Seleccionar el Peso Total",
-          }}
-        />
-        <Controller
-          control={control}
-          name="precioProductoQuote"
+          name="costoProducto"
           render={({ field, fieldState: { invalid, error } }) => (
             <Input
               {...field}
@@ -169,7 +124,11 @@ export default function QuoteForm() {
               errorMessage={error?.message}
               validationBehavior="aria"
               isInvalid={invalid}
-              label="Precio de producto a cobrar Q0.00"
+              label={
+                tipoServicio === "COD"
+                  ? "Costo Producto a Cobrar"
+                  : "Costo Producto a Enviar"
+              }
               name="Precio"
               variant="bordered"
               onChange={(e) => {
@@ -180,7 +139,7 @@ export default function QuoteForm() {
                 field.onChange(formatMonto(e.target.value));
               }}
               value={field.value}
-              {...(servicioQuote === "ESTANDAR"
+              {...(tipoServicio === "ESTANDAR"
                 ? {
                     description: (
                       <>
@@ -211,15 +170,20 @@ export default function QuoteForm() {
             required: "Debes Seleccionar el Precio",
           }}
         />
-        {servicioQuote === "ESTANDAR" && (
+        {tipoServicio === "ESTANDAR" && (
           <Controller
             control={control}
-            name="dondePagaQuote"
+            name="dondePaga"
             render={({ field }) => (
-              <div className="flex items-center justify-center gap-2">
-                <label>Desea pagar en destino? (+Q3.00)</label>
-                <Switch {...field} aria-label="dondePagaQuote" />
-              </div>
+              <>
+                <div className="flex items-center justify-center gap-2">
+                  <label>Desea pagar en destino? (+5%)</label>
+                  <Switch {...field} aria-label="dondePagaQuote" />
+                </div>
+                <span className="text-xs text-primary">
+                  El 5% se calcula en base a el precio del producto
+                </span>
+              </>
             )}
           />
         )}

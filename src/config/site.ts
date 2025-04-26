@@ -114,8 +114,9 @@ export const deliveryOptions = [
 ]
 
 export const packageOptions = [
-    { key: 1, label: 'Sobres' },
-    { key: 2, label: 'Paquetes' },
+    { key: 1, label: 'Sobre ( 1lbs a 4lbs )' },
+    { key: 2, label: 'Paquete Pequeño ( 4lbs a 7lbs )' },
+    { key: 3, label: 'Paquete Mediano ( 7lbs a 10lbs )' },
 ]
 
 export const bancos = [

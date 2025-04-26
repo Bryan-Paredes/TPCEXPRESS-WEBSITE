@@ -17,9 +17,8 @@ export const sendEmail = async (data: {
       headers: {
         'Content-Type': 'application/json',
       },
-
+      mode: 'no-cors',
       body: JSON.stringify(data),
-      mode: 'cors',
     });
 
     if (!response.ok) {
@@ -36,11 +35,10 @@ export const sendEmail = async (data: {
 
 export const sendShip = async (data: SolicitudEnvio): Promise<{ success: boolean; message: string, guia?: { guia: { numeroGuia: string, estado: string } } }> => {
   try {
-    const response = await fetch('https://sistema.tpcxpress.com/api/solicitud', {
+    const response = await fetch('http://localhost:3000/api/website', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${API_TOKEN}`
       },
       body: JSON.stringify(data),
     });

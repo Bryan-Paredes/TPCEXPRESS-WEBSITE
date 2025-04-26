@@ -3,19 +3,18 @@ import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
 interface FormState {
-    servicioQuote: string;
-    origenQuote: string;
-    destinoQuote: string;
-    queEnviasQuote: string;
-    cantidadPaquetesQuote: number;
-    pesoQuote: string;
-    precioProductoQuote: number;
-    dondePagaQuote: boolean;
-    setTotal: number;
+    tipoServicio: string;
+    cantidadPaquetes: number;
+    ciudadOrigen: string;
+    ciudadDestino: string;
+    tipoPaquete: string;
+    costoProducto: number;
+    dondePaga: boolean;
+    costoServicio: number;
 }
 
 interface FormActions {
-    setServicioQuote: (newState: string) => void;
+    setTipoServicio: (newState: string) => void;
     updateField: (field: keyof FormState, value: any) => void;
     resetFormQuote: () => void;
     submitFormQuote: (data: FormState) => void;
@@ -27,19 +26,18 @@ export const useCotizacionStore = create<FormState & FormActions>()(
     persist(
         (set, get) => ({
             // Estado inicial del formulario
-            servicioQuote: '',
-            origenQuote: '',
-            destinoQuote: '',
-            queEnviasQuote: '',
-            cantidadPaquetesQuote: 0,
-            pesoQuote: '',
-            precioProductoQuote: 0,
-            dondePagaQuote: false,
-            setTotal: 0,
+            tipoServicio: '',
+            cantidadPaquetes: 1,
+            ciudadOrigen: '',
+            ciudadDestino: '',
+            tipoPaquete: '',
+            costoProducto: 0,
+            dondePaga: false,
+            costoServicio: 0,
 
 
             // Método para actualizar el servicio seleccionado
-            setServicioQuote: (newState) => set({ servicioQuote: newState }),
+            setTipoServicio: (newState) => set({ tipoServicio: newState }),
 
             // Métodos para actualizar los campos del formulario
             updateField: (field, value) => {
@@ -57,21 +55,21 @@ export const useCotizacionStore = create<FormState & FormActions>()(
             // Método para resetear el formulario
             resetFormQuote: () =>
                 set(() => ({
-                    servicioQuote: '',
-                    origenQuote: '',
-                    destinoQuote: '',
-                    queEnviasQuote: '',
-                    cantidadPaquetesQuote: 0,
-                    pesoQuote: '',
-                    precioProductoQuote: 0,
-                    dondePagaQuote: false,
-                    setTotal: 0,
+                    tipoServicio: '',
+                    cantidadPaquetes: 1,
+                    ciudadOrigen: '',
+                    ciudadDestino: '',
+                    tipoPaquete: '',
+                    costoProducto: 0,
+                    dondePaga: false,
+                    costoServicio: 0,
                 })),
 
             // Método para guardar todo el formulario
             submitFormQuote: (data) => {
                 set(() => ({
                     ...data,
+                    cantidadPaquetes: get().cantidadPaquetes,
                     setTotal: get().calculateQuote(),
                 }))
 
@@ -82,9 +80,9 @@ export const useCotizacionStore = create<FormState & FormActions>()(
             calculateQuote: () => {
                 const state = get();
 
-                const total = calculateQuote(state.cantidadPaquetesQuote, state.precioProductoQuote, state.dondePagaQuote, state.servicioQuote);
+                const total = calculateQuote(state.costoProducto, state.dondePaga, state.tipoServicio, state.ciudadOrigen, state.ciudadDestino);
 
-                set(() => ({ setTotal: total }));
+                set(() => ({ costoServicio: total }));
 
                 return total;
             },

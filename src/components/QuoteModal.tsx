@@ -13,15 +13,13 @@ import { useCotizacionStore } from "@/stores/servicio";
 
 export default function QuoteModal({ isOpen, setIsOpen }: any) {
   const {
-    origenQuote,
-    destinoQuote,
-    queEnviasQuote,
-    cantidadPaquetesQuote,
-    pesoQuote,
-    precioProductoQuote,
-    dondePagaQuote,
-    servicioQuote,
-    setTotal,
+    tipoServicio,
+    ciudadOrigen,
+    ciudadDestino,
+    tipoPaquete,
+    costoProducto,
+    dondePaga,
+    costoServicio,
   } = useCotizacionStore();
 
   return (
@@ -36,17 +34,17 @@ export default function QuoteModal({ isOpen, setIsOpen }: any) {
               <>
                 <p className="uppercase font-bold">
                   <span className="text-primary">Origen: </span>
-                  {origenQuote}
+                  {ciudadOrigen}
                 </p>
                 <p className="uppercase font-bold">
                   <span className="text-primary">Destino: </span>
-                  {destinoQuote}
+                  {ciudadDestino}
                 </p>
                 <p className="uppercase font-bold">
                   <span className="text-primary">Envío: </span>
-                  {queEnviasQuote}
+                  {tipoPaquete}
                 </p>
-                <p className="uppercase font-bold">
+                {/* <p className="uppercase font-bold">
                   <span className="text-primary">Paquetes: </span>
                   {cantidadPaquetesQuote}
                 </p>
@@ -57,18 +55,25 @@ export default function QuoteModal({ isOpen, setIsOpen }: any) {
                 <p className="uppercase font-bold">
                   <span className="text-primary">Precio: </span>Q
                   {precioProductoQuote}
-                </p>
+                </p> */}
 
-                {servicioQuote === "ESTANDAR" && (
+                {tipoServicio === "ESTANDAR" && (
                   <p className="uppercase font-bold">
                     <span className="text-primary">Pago en Destino: </span>
-                    {dondePagaQuote ? "Si" : "NO"}
+                    {dondePaga ? "Si" : "NO"}
+                  </p>
+                )}
+
+                {tipoServicio === "COD" && (
+                  <p className="uppercase font-bold">
+                    <span className="text-primary">Costo Producto: </span>Q
+                    {costoProducto}
                   </p>
                 )}
 
                 <p className="uppercase font-bold text-xl text-green-600">
-                  <span className="">Total: </span>
-                  <span>Q{setTotal}</span>
+                  <span className="">Costo de Servicio: </span>
+                  <span>Q{costoServicio}</span>
                 </p>
               </>
             </ModalBody>
