@@ -27,7 +27,9 @@ export default function HomeModal({ isOpen, guia }: Props) {
   const handleDownloadGuia = async (guia: string) => {
     setLoading(true);
     try {
-      const res = await fetch(`http://localhost:3000/api/pdf?guia=${guia}`);
+      const res = await fetch(
+        `https://sistema.tpcxpress.com/api/pdf?guia=${guia}`
+      );
 
       if (!res.ok) return new Response(res.statusText, { status: res.status });
 
