@@ -35,7 +35,7 @@ export const sendEmail = async (data: {
 
 export const sendShip = async (data: SolicitudEnvio): Promise<{ success: boolean; message: string, guia?: { guia: { numeroGuia: string, estado: string } } }> => {
   try {
-    const response = await fetch('http://localhost:3000/api/website', {
+    const response = await fetch('https://sistema.tpcxpress.com/api/website', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
