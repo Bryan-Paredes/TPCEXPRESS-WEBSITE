@@ -60,8 +60,6 @@ export default function ShipSection() {
     try {
       const response = await sendShip(data);
 
-      console.log(response);
-
       if (response.success && response.guia) {
         toast.success("¡Mensaje enviado exitosamente!");
         confetti({ angle: 60 });
