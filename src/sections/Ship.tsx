@@ -13,7 +13,7 @@ import {
 } from "@nextui-org/react";
 import { Controller, useForm, type SubmitHandler } from "react-hook-form";
 import { BadgeCheck, PackageCheck } from "lucide-react";
-import { sendShip } from "@/api/email";
+import { sendShip } from "@/lib/send-ship";
 import { toast, Toaster } from "sonner";
 import confetti from "canvas-confetti";
 import { useEffect, useState } from "react";

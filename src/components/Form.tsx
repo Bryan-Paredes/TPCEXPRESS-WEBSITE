@@ -1,4 +1,4 @@
-import { sendEmail } from "@/api/email";
+// import { sendEmail } from "@/api/email";
 import { interestArea } from "@/config/site";
 import {
   Button,
@@ -23,13 +23,23 @@ interface FormInputs {
   terms: boolean;
 }
 
-export default async function FormComponent() {
-  const { control, handleSubmit } = useForm<FormInputs>();
+export default function FormComponent() {
+  const {
+    control,
+    handleSubmit,
+    formState: { isSubmitting },
+  } = useForm<FormInputs>();
 
   const onSubmit: SubmitHandler<FormInputs> = async (data) => {
+    console.log(data);
+
     try {
-      const response = await sendEmail(data);
-      if (response.success) {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        body: JSON.stringify(data),
+      });
+
+      if (response.ok) {
         toast.success("¡Mensaje enviado exitosamente!");
         confetti({ angle: 60 });
       } else {
@@ -171,11 +181,16 @@ export default async function FormComponent() {
           <Controller
             name="terms"
             control={control}
-            render={({ field, fieldState: { invalid } }) => (
+            render={({
+              field: { value, onChange, ...field },
+              fieldState: { invalid },
+            }) => (
               <Checkbox
                 {...field}
                 isRequired
                 isInvalid={invalid}
+                isSelected={value}
+                onValueChange={onChange}
                 icon={<BadgeCheck />}
                 className="my-5"
               >
@@ -197,10 +212,11 @@ export default async function FormComponent() {
           type="submit"
           color="primary"
           variant="solid"
-          startContent={<Send />}
+          isLoading={isSubmitting}
+          startContent={isSubmitting ? null : <Send />}
           className="w-fit uppercase text-white"
         >
-          Enviar
+          {isSubmitting ? "Enviando..." : "Enviar"}
         </Button>
       </Form>
     </section>
