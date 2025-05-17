@@ -31,8 +31,6 @@ export default function FormComponent() {
   } = useForm<FormInputs>();
 
   const onSubmit: SubmitHandler<FormInputs> = async (data) => {
-    console.log(data);
-
     try {
       const response = await fetch("/api/contact", {
         method: "POST",
