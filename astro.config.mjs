@@ -8,16 +8,6 @@ import vercel from "@astrojs/vercel";
 
 // https://astro.build/config
 export default defineConfig({
-  env: {
-    schema: {
-      API_TOKEN: envField.string({ context: "client", access: "public" }),
-    },
-  },
-
   integrations: [react(), tailwind({ applyBaseStyles: false })],
-  adapter: vercel({
-    webAnalytics: {
-      enabled: true,
-    },
-  }),
+  adapter: vercel(),
 });
