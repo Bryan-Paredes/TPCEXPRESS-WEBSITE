@@ -53,14 +53,16 @@ export function TrackingResult({ guia }: { guia: GuiaSeguimiento | null }) {
                 </div>
               </div>
             </div>
-            <CardContent className="p-6 w-full">
+            <CardContent className="p-6 w-full border border-gray-100 rounded-b-lg">
               <div className="w-full flex gap-6 mb-8 items-center justify-center">
-                <div className="w-full flex flex-col items-center p-4 bg-purple-50 rounded-xl">
+                <div className="w-full flex flex-col items-center p-4 bg-purple-50 dark:bg-black dark:border dark:border-gray-100 rounded-xl">
                   <div className="bg-purple-100 p-3 rounded-full mb-3">
                     <MapPin className="h-6 w-6 text-purple-600" />
                   </div>
-                  <p className="text-sm text-gray-500 mb-1">Origen</p>
-                  <p className="font-semibold text-center">
+                  <p className="text-sm text-gray-500 dark:text-white mb-1">
+                    Origen
+                  </p>
+                  <p className="font-semibold text-center hidden sm:block">
                     {guia.solicitud.ciudadOrigen}
                   </p>
                   <span className="text-sm text-muted-foreground text-center">
@@ -68,12 +70,17 @@ export function TrackingResult({ guia }: { guia: GuiaSeguimiento | null }) {
                   </span>
                 </div>
                 <ArrowRight size={60} color="orange" />
-                <div className="w-full flex flex-col items-center p-4 bg-blue-50 rounded-xl">
+                <div
+                  className="w-full flex flex-col items-center p-4 bg-blue-50 dark:bg-black dark:border dark:border-gray-100
+                 rounded-xl"
+                >
                   <div className="bg-blue-100 p-3 rounded-full mb-3">
                     <MapPin className="h-6 w-6 text-blue-600" />
                   </div>
-                  <p className="text-sm text-gray-500 mb-1">Destino</p>
-                  <p className="font-semibold text-center">
+                  <p className="text-sm text-gray-500 dark:text-white mb-1">
+                    Destino
+                  </p>
+                  <p className="font-semibold text-center hidden sm:block">
                     {guia.solicitud.ciudadDestino}
                   </p>
                   <span className="text-sm text-muted-foreground text-center">
@@ -82,13 +89,15 @@ export function TrackingResult({ guia }: { guia: GuiaSeguimiento | null }) {
                 </div>
               </div>
 
-              <div className="flex flex-col sm:flex-row sm:items-center justify-evenly gap-4 mb-8 p-4 bg-gradient-to-r from-purple-50 to-indigo-50 rounded-xl">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-evenly gap-4 mb-8 p-4 bg-gradient-to-r from-purple-50 to-indigo-50 dark:bg-gradient-to-r dark:from-yellow-700 dark:to-orange-700 rounded-xl">
                 <div className="flex items-center gap-3">
                   <div className="bg-white p-2 rounded-full shadow-sm">
                     <Calendar className="h-5 w-5 text-purple-600" />
                   </div>
                   <div>
-                    <p className="text-sm text-gray-500">Entrega estimada</p>
+                    <p className="text-sm text-gray-500 dark:text-gray-300">
+                      Entrega estimada
+                    </p>
                     <p className="font-semibold">
                       {calcularFechaEstimadaEntrega(guia.createdAt)}
                     </p>
@@ -111,22 +120,22 @@ export function TrackingResult({ guia }: { guia: GuiaSeguimiento | null }) {
               </div>
 
               <Tabs defaultValue="history" className="w-full">
-                <TabsList className="grid w-full grid-cols-3 overflow-hidden mb-6 bg-gray-100 p-1 rounded-lg">
+                <TabsList className="grid w-full grid-cols-3 overflow-hidden mb-6 bg-gray-100 dark:bg-black p-1 rounded-lg">
                   <TabsTrigger
                     value="history"
-                    className="data-[state=active]:bg-white data-[state=active]:text-orange-700 data-[state=active]:shadow-sm rounded-md py-3 font-medium"
+                    className="data-[state=active]:bg-gray-300 data-[state=active]:text-orange-700 data-[state=active]:shadow-sm rounded-md py-3 font-medium text-base"
                   >
                     Historial
                   </TabsTrigger>
                   <TabsTrigger
                     value="intentos"
-                    className="data-[state=active]:bg-white data-[state=active]:text-orange-700 data-[state=active]:shadow-sm rounded-md py-3 font-medium"
+                    className="data-[state=active]:bg-gray-300 data-[state=active]:text-orange-700 data-[state=active]:shadow-sm rounded-md py-3 font-medium text-base"
                   >
                     Intentos
                   </TabsTrigger>
                   <TabsTrigger
                     value="entregas"
-                    className="data-[state=active]:bg-white data-[state=active]:text-orange-700 data-[state=active]:shadow-sm rounded-md py-3 font-medium"
+                    className="data-[state=active]:bg-gray-300 data-[state=active]:text-orange-700 data-[state=active]:shadow-sm rounded-md py-3 font-medium text-base"
                   >
                     Entregas
                   </TabsTrigger>
@@ -137,7 +146,7 @@ export function TrackingResult({ guia }: { guia: GuiaSeguimiento | null }) {
                     {/* Evento: Paquete Creado */}
                     <div className="relative pl-8 pb-8">
                       {/* Línea vertical */}
-                      <div className="absolute left-3.5 top-3 h-full w-0.5 bg-gray-200"></div>
+                      <div className="absolute left-3.5 top-3 h-full w-0.5 bg-gray-200 "></div>
                       {/* Punto de estado */}
                       <div
                         className={`absolute left-0 top-0 h-7 w-7 rounded-full flex items-center justify-center ${getStatusColor(
@@ -146,14 +155,14 @@ export function TrackingResult({ guia }: { guia: GuiaSeguimiento | null }) {
                       >
                         <div className="h-3 w-3 bg-white rounded-full"></div>
                       </div>
-                      <div className="bg-gray-50 p-4 rounded-lg shadow-sm">
+                      <div className="bg-gray-50 dark:bg-black dark:border dark:border-gray-200 p-4 rounded-lg shadow-sm">
                         <div className="flex items-center gap-2 mb-2">
                           {getStatusIcon("SIN_RECOLLECTAR")}
-                          <h3 className="font-semibold text-gray-800">
+                          <h3 className="font-semibold text-gray-800 dark:text-white">
                             Paquete Creado
                           </h3>
                         </div>
-                        <div className="flex items-center gap-2 text-gray-600 text-sm">
+                        <div className="flex items-center gap-2 text-gray-600 dark:text-white text-sm">
                           <Clock className="h-4 w-4 text-gray-400" />
                           <span>{formatearFechaGT(guia.createdAt)}</span>
                         </div>
@@ -170,14 +179,14 @@ export function TrackingResult({ guia }: { guia: GuiaSeguimiento | null }) {
                         >
                           <div className="h-3 w-3 bg-white rounded-full"></div>
                         </div>
-                        <div className="bg-gray-50 p-4 rounded-lg shadow-sm">
+                        <div className="bg-gray-50 dark:bg-black dark:border dark:border-gray-200 p-4 rounded-lg shadow-sm">
                           <div className="flex items-center gap-2 mb-2">
                             {getStatusIcon("RECOLECTADO")}
-                            <h3 className="font-semibold text-gray-800">
+                            <h3 className="font-semibold text-gray-800 dark:text-white">
                               Recolección de Paquete
                             </h3>
                           </div>
-                          <div className="flex items-center gap-2 text-gray-600 text-sm">
+                          <div className="flex items-center gap-2 text-gray-600 dark:text-white text-sm">
                             <Clock className="h-4 w-4 text-gray-400" />
                             <span>
                               {formatearFechaGT(guia.fechaRecoleccion)}
@@ -196,17 +205,24 @@ export function TrackingResult({ guia }: { guia: GuiaSeguimiento | null }) {
                         >
                           <div className="h-3 w-3 bg-white rounded-full"></div>
                         </div>
-                        <div className="bg-gray-50 p-4 rounded-lg shadow-sm">
+                        <div className="bg-gray-50 dark:bg-black dark:border dark:border-gray-200 p-4 rounded-lg shadow-sm">
                           <div className="flex items-center gap-2 mb-2">
                             {getStatusIcon("EN_RUTA")}
-                            <h3 className="font-semibold text-gray-800">
+                            <h3 className="font-semibold text-gray-800 dark:text-white">
                               En Ruta
                             </h3>
                           </div>
-                          <div className="flex items-center gap-2 text-gray-600 text-sm">
+                          <div className="flex items-center gap-2 text-gray-600 dark:text-white text-sm">
                             <Clock className="h-4 w-4 text-gray-400" />
                             <span>Paquete en ruta para ser entregado</span>
                           </div>
+                          {guia.intentosEntregas &&
+                            guia.intentosEntregas.length > 0 && (
+                              <span className="text-sm text-red-600 font-medium">
+                                ({guia.intentosEntregas?.length} intentos de
+                                entrega)
+                              </span>
+                            )}
                         </div>
                       </div>
                     )}
@@ -220,16 +236,16 @@ export function TrackingResult({ guia }: { guia: GuiaSeguimiento | null }) {
                         >
                           <div className="h-3 w-3 bg-white rounded-full"></div>
                         </div>
-                        <div className="bg-gray-50 p-4 rounded-lg shadow-sm">
+                        <div className="bg-gray-50 dark:bg-black dark:border dark:border-gray-200 p-4 rounded-lg shadow-sm">
                           <div className="flex items-center gap-2 mb-2">
                             {getStatusIcon("ENTREGADO")}
-                            <h3 className="font-semibold text-gray-800">
+                            <h3 className="font-semibold text-gray-800 dark:text-white">
                               Entregado
                             </h3>
                           </div>
-                          <div className="flex items-center gap-2 text-gray-600 text-sm">
+                          <div className="flex items-center gap-2 text-gray-600 dark:text-white text-sm">
                             <Clock className="h-4 w-4 text-gray-400" />
-                            <span>{guia.fechaEntrega}</span>
+                            <span>{formatearFechaGT(guia.fechaEntrega)}</span>
                           </div>
                         </div>
                       </div>
@@ -243,14 +259,14 @@ export function TrackingResult({ guia }: { guia: GuiaSeguimiento | null }) {
                         >
                           <div className="h-3 w-3 bg-white rounded-full"></div>
                         </div>
-                        <div className="bg-gray-50 p-4 rounded-lg shadow-sm">
+                        <div className="bg-gray-50 dark:bg-black dark:border dark:border-gray-200 p-4 rounded-lg shadow-sm">
                           <div className="flex items-center gap-2 mb-2">
                             {getStatusIcon("DEVOLUCION")}
-                            <h3 className="font-semibold text-gray-800">
+                            <h3 className="font-semibold text-gray-800 dark:text-white">
                               Devolución
                             </h3>
                           </div>
-                          <div className="flex items-center gap-2 text-gray-600 text-sm">
+                          <div className="flex items-center gap-2 text-gray-600 dark:text-white text-sm">
                             <Clock className="h-4 w-4 text-gray-400" />
                             <span>Paquete en proceso de devolución</span>
                           </div>
@@ -267,23 +283,23 @@ export function TrackingResult({ guia }: { guia: GuiaSeguimiento | null }) {
                         (attempt: IntentoEntrega, index: number) => (
                           <div
                             key={index}
-                            className="bg-red-100 border border-red-200 p-5 rounded-xl"
+                            className="bg-red-100 border-2 border-red-200 dark:bg-black p-5 rounded-xl"
                           >
                             <div className="flex items-center gap-3 mb-3">
                               <div className="bg-white p-2 rounded-full shadow-sm">
                                 <XCircle className="h-5 w-5 text-red-500" />
                               </div>
                               <div>
-                                <h3 className="font-semibold text-gray-800">
+                                <h3 className="font-semibold text-gray-800 dark:text-white">
                                   Intento de entrega {index + 1}
                                 </h3>
-                                <p className="text-sm text-gray-600">
-                                  {attempt.createdAt}
+                                <p className="text-sm text-gray-600 dark:text-gray-300">
+                                  {formatearFechaGT(attempt.createdAt)}
                                 </p>
                               </div>
                             </div>
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
-                              <div className="bg-white p-3 rounded-lg shadow-sm">
+                              <div className="bg-white dark:bg-gray-300 p-3 rounded-lg shadow-sm">
                                 <p className="text-sm text-gray-500 mb-1">
                                   Motivo
                                 </p>
@@ -291,22 +307,22 @@ export function TrackingResult({ guia }: { guia: GuiaSeguimiento | null }) {
                                   {attempt.descripcion}
                                 </p>
                               </div>
-                              <div className="bg-white p-3 rounded-lg shadow-sm">
+                              <div className="bg-white dark:bg-gray-300 p-3 rounded-lg shadow-sm">
                                 <p className="text-sm text-gray-500 mb-1">
                                   Notas
                                 </p>
-                                <p className="font-medium">
-                                  {formatearFechaGT(attempt.createdAt)}
+                                <p className="font-medium dark:text-gray-800">
+                                  {attempt.descripcion || "Sin notas"}
                                 </p>
                               </div>
-                              <div className="bg-white p-4 rounded-lg shadow-sm">
+                              <div className="bg-white dark:bg-gray-300 p-4 rounded-lg shadow-sm">
                                 <div className="flex items-center gap-2 mb-3">
                                   <Camera className="h-4 w-4 text-red-600" />
                                   <p className="font-medium text-gray-700">
                                     Comprobante fotográfico
                                   </p>
                                 </div>
-                                <div className="bg-gray-50 p-4 rounded-lg border border-gray-200 flex items-center justify-center">
+                                <div className="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg border border-gray-200 dark:border-gray-600 flex items-center justify-center">
                                   {attempt.fotoUrl ? (
                                     <img
                                       src={
@@ -354,7 +370,7 @@ export function TrackingResult({ guia }: { guia: GuiaSeguimiento | null }) {
 
                 <TabsContent value="entregas" className="mt-0">
                   {guia.fechaEntrega ? (
-                    <div className="bg-green-50 border border-green-100 p-6 rounded-xl">
+                    <div className="bg-green-50 border border-green-200 dark:bg-black dark:border-gray-600 p-6 rounded-xl">
                       <h3 className="text-lg font-semibold text-gray-800 mb-4 flex items-center gap-2">
                         <ClipboardCheck className="h-5 w-5 text-green-600" />
                         Entrega Registrada
@@ -369,7 +385,9 @@ export function TrackingResult({ guia }: { guia: GuiaSeguimiento | null }) {
                                 Fecha de entrega
                               </p>
                             </div>
-                            <p className="text-gray-800">{guia.fechaEntrega}</p>
+                            <p className="text-gray-800">
+                              {formatearFechaGT(guia.fechaEntrega)}
+                            </p>
                           </div>
 
                           <div className="bg-white p-4 rounded-lg shadow-sm">

@@ -46,7 +46,7 @@ export function Tracking() {
     <div className="space-y-6">
       <Card className="overflow-hidden border-0 shadow-lg">
         <div className="bg-gradient-to-r from-yellow-400 to-orange-400 p-[3px]">
-          <CardContent className="bg-white p-6 rounded-sm">
+          <CardContent className="bg-white dark:bg-black p-6 rounded-sm">
             <form
               onSubmit={handleSubmit(onSubmit)}
               className="flex flex-col sm:flex-row gap-3"
@@ -54,7 +54,7 @@ export function Tracking() {
               <div className="relative flex-1">
                 <Input
                   type="text"
-                  placeholder="Ingresa tu número de guía (ej: ABC123456789 o XYZ987654321)"
+                  placeholder="Ingresa tu número de guía (ej: TPCE291734432 o TPCP1054276420)"
                   {...register("trackingNumber", {
                     required: "Este campo es obligatorio",
                   })}
