@@ -1,13 +1,14 @@
 import { Button, Link } from "@nextui-org/react";
-import { Route } from "lucide-react";
+import { PackageSearch, Route } from "lucide-react";
 import { SendServiceIcon, WhatsappIcon } from "./icons";
 
 function HeaderButtons() {
   return (
-    <div className="flex gap-4 items-center my-5">
+    <div className="flex flex-col md:flex-row items-start gap-4 my-5">
       <Button
         as={Link}
         variant="ghost"
+        size="sm"
         color="primary"
         href="/quote"
         className="uppercase font-semibold"
@@ -18,6 +19,7 @@ function HeaderButtons() {
       <Button
         as={Link}
         isExternal
+        size="sm"
         variant="ghost"
         color="success"
         href="https://wa.me/50258644597"
@@ -25,6 +27,17 @@ function HeaderButtons() {
         startContent={<WhatsappIcon size={20} />}
       >
         Whatsapp
+      </Button>
+      <Button
+        as={Link}
+        variant="ghost"
+        size="sm"
+        color="warning"
+        href="/seguimiento"
+        className="uppercase font-semibold hover:text-white"
+        startContent={<PackageSearch size={20} />}
+      >
+        Rastrea tu guía
       </Button>
     </div>
   );
