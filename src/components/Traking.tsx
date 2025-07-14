@@ -23,13 +23,9 @@ export function Tracking() {
   } = useForm<TrackingForm>();
 
   const onSubmit: SubmitHandler<TrackingForm> = async (data) => {
-    console.log(data);
-
     try {
       const guia = await getGuiaTracking(data.trackingNumber);
       setResult(guia);
-
-      console.log(guia);
     } catch (error) {
       if (error instanceof Error) {
         console.error(error);

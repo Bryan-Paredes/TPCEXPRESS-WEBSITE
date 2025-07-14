@@ -27,7 +27,6 @@ export const sendShip = async (data: SolicitudEnvio): Promise<{ success: boolean
         }
 
     } catch (error) {
-        console.log(error);
 
         throw new Error(`Error al enviar el correo: ${error}`);
     }
