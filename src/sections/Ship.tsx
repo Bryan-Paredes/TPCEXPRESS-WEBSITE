@@ -60,6 +60,15 @@ export default function ShipSection() {
     try {
       const response = await sendShip(data);
 
+      await fetch("/api/meta-event", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email: data.correoRemitente,
+          phone: data.telefonoRemitente,
+        }),
+      });
+
       if (response.success && response.guia) {
         toast.success("¡Mensaje enviado exitosamente!");
         confetti({ angle: 60 });
@@ -69,6 +78,7 @@ export default function ShipSection() {
         toast.error("¡Ha ocurrido un error al enviar el mensaje!");
       }
     } catch (error) {
+      console.log(error);
       toast.error("¡Ha ocurrido un error en la solicitud!");
     }
   };
