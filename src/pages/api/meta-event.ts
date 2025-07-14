@@ -8,7 +8,7 @@ const PIXEL_ID = import.meta.env.META_PIXEL_ID;
 const ACCESS_TOKEN = import.meta.env.META_ACCESS_TOKEN;
 
 //Entorno de pruebas el codigo debe de ir a nivel de data
-const TEST_EVENT_CODE = 'TEST68516';
+// const TEST_EVENT_CODE = 'TEST68516';
 
 
 function hashSHA256(value: string) {
@@ -48,7 +48,7 @@ export const POST: APIRoute = async ({ request }) => {
                 }
             },
         ],
-        test_event_code: TEST_EVENT_CODE,
+        // test_event_code: TEST_EVENT_CODE,
     };
 
     const url = `https://graph.facebook.com/v23.0/${PIXEL_ID}/events?access_token=${ACCESS_TOKEN}`;
