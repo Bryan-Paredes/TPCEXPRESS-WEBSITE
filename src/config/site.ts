@@ -58,7 +58,7 @@ export const companyInfo =
 {
     address: "2 calle A 42-62 zona 3 de Mixco",
     phone: "2298-1217",
-    email: "info@tpcexpress.com",
+    email: "info@tpcxpress.com",
 }
 
 export const interestArea = [

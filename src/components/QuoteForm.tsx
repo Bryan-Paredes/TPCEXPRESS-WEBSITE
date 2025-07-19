@@ -20,7 +20,6 @@ interface QuoteFormValues {
   tipoPaquete: string;
   costoProducto: string;
   dondePaga: boolean;
-  costoServicio: string;
 }
 
 export default function QuoteForm() {
@@ -32,15 +31,16 @@ export default function QuoteForm() {
     useCotizacionStore();
 
   const onSubmit: SubmitHandler<QuoteFormValues> = (data) => {
-    const { costoProducto, costoServicio, ...rest } = data;
+    const { costoProducto, dondePaga, ...rest } = data;
 
     const newCost = Number(costoProducto);
-    const newTotal = Number(costoServicio);
+    const costoServicio = 35; // Precio fijo de 35
 
     submitFormQuote({
       costoProducto: newCost,
-      costoServicio: newTotal,
+      costoServicio: costoServicio,
       cantidadPaquetes: 1,
+      dondePaga: dondePaga || false,
       ...rest,
     });
     calculateQuote();
@@ -177,12 +177,13 @@ export default function QuoteForm() {
             render={({ field }) => (
               <>
                 <div className="flex items-center justify-center gap-2">
-                  <label>Desea pagar en destino? (+5%)</label>
-                  <Switch {...field} aria-label="dondePagaQuote" />
+                  <label>Desea pagar en destino?</label>
+                  <Switch
+                    isSelected={field.value}
+                    onValueChange={field.onChange}
+                    aria-label="dondePagaQuote"
+                  />
                 </div>
-                <span className="text-xs text-primary">
-                  El 5% se calcula en base a el precio del producto
-                </span>
               </>
             )}
           />

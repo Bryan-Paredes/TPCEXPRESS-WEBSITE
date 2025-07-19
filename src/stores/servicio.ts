@@ -78,9 +78,7 @@ export const useCotizacionStore = create<FormState & FormActions>()(
 
             // Método para calcular el total de la cotización
             calculateQuote: () => {
-                const state = get();
-
-                const total = calculateQuote(state.costoProducto, state.dondePaga, state.tipoServicio, state.ciudadOrigen, state.ciudadDestino);
+                const total = 35; // Precio fijo de 35
 
                 set(() => ({ costoServicio: total }));
 

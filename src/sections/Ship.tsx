@@ -27,6 +27,7 @@ export default function ShipSection() {
     ciudadDestino,
     costoServicio,
     costoProducto,
+    dondePaga,
   } = useCotizacionStore();
 
   const [openModal, setOpenModal] = useState(false);
@@ -53,8 +54,10 @@ export default function ShipSection() {
     setValue("tipoServicio", tipoServicio);
     setValue("costoServicio", costoServicio);
     setValue("cantidadPaquetes", "1");
+    // Mapear dondePaga: true = "destino", false = "origen"
+    setValue("dondePaga", dondePaga ? "destino" : "origen");
     // setValue("total", setTotal);
-  }, [ciudadOrigen, ciudadDestino, costoServicio, setValue]);
+  }, [ciudadOrigen, ciudadDestino, costoServicio, dondePaga, setValue]);
 
   const onSubmit: SubmitHandler<SolicitudEnvio> = async (data) => {
     try {
@@ -528,7 +531,8 @@ export default function ShipSection() {
             name="terminos"
             render={({ field, fieldState: { invalid } }) => (
               <Checkbox
-                {...field}
+                isSelected={field.value}
+                onValueChange={field.onChange}
                 isRequired
                 isInvalid={invalid}
                 icon={<BadgeCheck />}

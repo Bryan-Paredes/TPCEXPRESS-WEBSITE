@@ -17,6 +17,7 @@ export interface SolicitudEnvio {
     obsDestinatario: string;
     nit: string;
     nombreFactura: string;
+    dondePaga: string; // "destino" o "origen"
     banco?: string;
     tipoCuenta?: string;
     numeroCuenta?: string;
