@@ -7,19 +7,23 @@ import {
   ModalContent,
   ModalFooter,
   ModalHeader,
+  Spinner,
 } from "@nextui-org/react";
 import { PdfIcon } from "./icons";
 import { useCotizacionStore } from "@/stores/servicio";
+import { formatearQuetzal } from "@/utils/formatearQuetzal";
 
 export default function QuoteModal({ isOpen, setIsOpen }: any) {
   const {
     tipoServicio,
-    ciudadOrigen,
-    ciudadDestino,
+    ciudadOrigenNombre,
+    ciudadDestinoNombre,
     tipoPaquete,
+    cantidadPaquetes,
     costoProducto,
     dondePaga,
     costoServicio,
+    isCalculatingQuote,
   } = useCotizacionStore();
 
   return (
@@ -34,35 +38,27 @@ export default function QuoteModal({ isOpen, setIsOpen }: any) {
               <>
                 <p className="uppercase font-bold">
                   <span className="text-primary">Origen: </span>
-                  {ciudadOrigen}
+                  {ciudadOrigenNombre}
                 </p>
                 <p className="uppercase font-bold">
                   <span className="text-primary">Destino: </span>
-                  {ciudadDestino}
+                  {ciudadDestinoNombre}
                 </p>
                 <p className="uppercase font-bold">
                   <span className="text-primary">Envío: </span>
                   {tipoPaquete}
                 </p>
-                {/* <p className="uppercase font-bold">
-                  <span className="text-primary">Paquetes: </span>
-                  {cantidadPaquetesQuote}
-                </p>
-                <p className="font-bold">
-                  <span className="text-primary uppercase">Peso: </span>
-                  {pesoQuote} lbs
-                </p>
                 <p className="uppercase font-bold">
-                  <span className="text-primary">Precio: </span>Q
-                  {precioProductoQuote}
-                </p> */}
+                  <span className="text-primary">Cantidad de Paquetes: </span>
+                  {cantidadPaquetes}
+                </p>
 
-                {tipoServicio === "ESTANDAR" && (
+                {/* {tipoServicio === "ESTANDAR" && (
                   <p className="uppercase font-bold">
                     <span className="text-primary">Pago en Destino: </span>
                     {dondePaga ? "Si" : "NO"}
                   </p>
-                )}
+                )} */}
 
                 {tipoServicio === "COD" && (
                   <p className="uppercase font-bold">
@@ -71,9 +67,20 @@ export default function QuoteModal({ isOpen, setIsOpen }: any) {
                   </p>
                 )}
 
-                <p className="uppercase font-bold text-xl text-green-600">
+                <p className="uppercase font-bold text-lg text-green-600 flex items-center gap-2">
                   <span className="">Costo de Servicio: </span>
-                  <span>Q{costoServicio}</span>
+                  <span className="flex items-center gap-2">
+                    {isCalculatingQuote ? (
+                      <div className="flex items-center gap-2">
+                        <Spinner size="sm" color="success" />
+                        <span className="text-sm text-gray-500">
+                          Calculando...
+                        </span>
+                      </div>
+                    ) : (
+                      formatearQuetzal(costoServicio ? costoServicio : 0)
+                    )}
+                  </span>
                 </p>
               </>
             </ModalBody>

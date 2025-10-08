@@ -19,12 +19,15 @@ import confetti from "canvas-confetti";
 import { useEffect, useState } from "react";
 import HomeModal from "@/components/HomeModal";
 import type { SolicitudEnvio } from "@/types/solicitudEnvio";
+import { formatearQuetzal } from "@/utils/formatearQuetzal";
 
 export default function ShipSection() {
   const {
     tipoServicio,
-    ciudadOrigen,
-    ciudadDestino,
+    ciudadOrigenNombre,
+    ciudadDestinoNombre,
+    tipoPaquete,
+    cantidadPaquetes,
     costoServicio,
     costoProducto,
     dondePaga,
@@ -40,24 +43,32 @@ export default function ShipSection() {
     formState: { isSubmitting },
   } = useForm<SolicitudEnvio>({
     defaultValues: {
-      ciudadOrigen: ciudadOrigen,
-      ciudadDestino: ciudadDestino,
-      costoServicio: costoServicio,
+      ciudadOrigen: ciudadOrigenNombre,
+      ciudadDestino: ciudadDestinoNombre,
+      costoServicio: costoServicio || 0,
     },
   });
 
   useEffect(() => {
-    setValue("ciudadOrigen", ciudadOrigen);
-    setValue("ciudadDestino", ciudadDestino);
-    // setValue("cantidadPaquetes", cantidadPaquetesQuote);
-    setValue("costoProducto", costoProducto);
+    setValue("ciudadOrigen", ciudadOrigenNombre);
+    setValue("ciudadDestino", ciudadDestinoNombre);
+    setValue("costoProducto", costoProducto || 0);
     setValue("tipoServicio", tipoServicio);
-    setValue("costoServicio", costoServicio);
-    setValue("cantidadPaquetes", "1");
+    setValue("costoServicio", costoServicio || 0);
+    setValue("cantidadPaquetes", cantidadPaquetes.toString());
     // Mapear dondePaga: true = "destino", false = "origen"
     setValue("dondePaga", dondePaga ? "destino" : "origen");
-    // setValue("total", setTotal);
-  }, [ciudadOrigen, ciudadDestino, costoServicio, dondePaga, setValue]);
+  }, [
+    ciudadOrigenNombre,
+    ciudadDestinoNombre,
+    tipoPaquete,
+    cantidadPaquetes,
+    costoServicio,
+    costoProducto,
+    tipoServicio,
+    dondePaga,
+    setValue,
+  ]);
 
   const onSubmit: SubmitHandler<SolicitudEnvio> = async (data) => {
     try {
@@ -106,30 +117,37 @@ export default function ShipSection() {
               <span className="text-lg font-bold capitalize">
                 Costo Servicio:{" "}
               </span>
-              <span className="text-primary font-bold">Q{costoServicio}</span>
+              <span className="text-primary font-bold">
+                {formatearQuetzal(costoServicio || 0)}
+              </span>
             </Chip>
           )}
         />
 
-        <Controller
-          name="costoProducto"
-          control={control}
-          defaultValue={costoProducto}
-          render={({ field }) => (
-            <Chip
-              {...field}
-              size="md"
-              variant="dot"
-              color="primary"
-              className="text-lg font-black capitalize mt-3"
-            >
-              <h3 className="text-lg font-bold">
-                Costo Producto:{" "}
-                <span className="text-primary uppercase">Q{costoProducto}</span>
-              </h3>
-            </Chip>
-          )}
-        />
+        {(costoProducto || 0) > 0 && (
+          <Controller
+            name="costoProducto"
+            control={control}
+            defaultValue={costoProducto}
+            render={({ field }) => (
+              <Chip
+                {...field}
+                size="md"
+                variant="dot"
+                color="primary"
+                className="text-lg font-black capitalize mt-3"
+              >
+                <h3 className="text-lg font-bold">
+                  Costo Producto:{" "}
+                  <span className="text-primary uppercase">
+                    {formatearQuetzal(costoProducto || 0)}
+                  </span>
+                </h3>
+              </Chip>
+            )}
+          />
+        )}
+
         <Controller
           name="tipoServicio"
           control={control}
@@ -150,7 +168,7 @@ export default function ShipSection() {
           )}
         />
 
-        {/* <Controller
+        <Controller
           name="cantidadPaquetes"
           control={control}
           render={({ field }) => (
@@ -165,11 +183,11 @@ export default function ShipSection() {
                 Cantidad de Paquetes:{" "}
               </span>
               <span className="text-primary font-bold">
-                {cantidadPaquetesQuote}
+                {cantidadPaquetes}
               </span>
             </Chip>
           )}
-        /> */}
+        />
         <Divider className="my-5" />
         <h3 className="uppercase font-bold">Información de Remitente</h3>
         <Controller
@@ -284,7 +302,7 @@ export default function ShipSection() {
         <Controller
           name="ciudadDestino"
           control={control}
-          defaultValue={ciudadDestino}
+          defaultValue={ciudadDestinoNombre}
           render={({ field }) => (
             <Input
               {...field}
@@ -293,7 +311,7 @@ export default function ShipSection() {
               type="text"
               label="Destino"
               variant="bordered"
-              value={ciudadDestino}
+              value={ciudadDestinoNombre}
             />
           )}
         />

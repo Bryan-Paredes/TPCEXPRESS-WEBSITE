@@ -102,22 +102,23 @@ export const serviceOptions = [
     { key: "ESTANDAR", label: "ESTANDAR" },
 ];
 
-export const deliveryOptions = [
-    { key: 1, label: 'Mixco' },
-    { key: 2, label: 'Guatemala' },
-    { key: 3, label: 'Fraijanes' },
-    { key: 4, label: 'Villa Nueva' },
-    { key: 5, label: 'Villa Canales' },
-    { key: 6, label: 'San José Pinula' },
-    { key: 7, label: 'San Miguel Petapa' },
-    { key: 8, label: 'Santa Catarina Pinula' },
-]
-
-export const packageOptions = [
-    { key: 1, label: 'Sobre ( 1lbs a 4lbs )' },
-    { key: 2, label: 'Paquete Pequeño ( 4lbs a 7lbs )' },
-    { key: 3, label: 'Paquete Mediano ( 7lbs a 10lbs )' },
-]
+export const packageList = [
+    {
+        title: "22 x 7 cm ( 1lbs a 4lbs )",
+        img: "/packageOptions/sobre.webp",
+        description: "Documentos y paquetes pequeños",
+    },
+    {
+        title: "25 x 12 cm ( 4lbs a 7lbs )",
+        img: "/packageOptions/caja.webp",
+        description: "Paquetes medianos",
+    },
+    {
+        title: "38 x 12 cm ( 7lbs a 10lbs )",
+        img: "/packageOptions/caja.webp",
+        description: "Paquetes grandes",
+    },
+];
 
 export const bancos = [
     { key: 1, label: 'Banco Industrial' },

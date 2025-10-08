@@ -1,24 +1,27 @@
-import calculateQuote from "@/config/calculateQuote";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
+import { obtenerCotizacion } from "@/lib/cotizar";
 
 interface FormState {
     tipoServicio: string;
     cantidadPaquetes: number;
     ciudadOrigen: string;
     ciudadDestino: string;
+    ciudadOrigenNombre: string;
+    ciudadDestinoNombre: string;
     tipoPaquete: string;
-    costoProducto: number;
+    costoProducto?: number;
     dondePaga: boolean;
-    costoServicio: number;
+    costoServicio?: number;
+    isCalculatingQuote: boolean;
 }
 
 interface FormActions {
     setTipoServicio: (newState: string) => void;
     updateField: (field: keyof FormState, value: any) => void;
     resetFormQuote: () => void;
-    submitFormQuote: (data: FormState) => void;
-    calculateQuote: () => number;
+    submitFormQuote: (data: Omit<FormState, 'isCalculatingQuote'>) => void;
+    calculateQuote: (params: { ciudadOrigenId: string; ciudadDestinoId: string }) => Promise<number>;
 }
 
 
@@ -30,10 +33,13 @@ export const useCotizacionStore = create<FormState & FormActions>()(
             cantidadPaquetes: 1,
             ciudadOrigen: '',
             ciudadDestino: '',
+            ciudadOrigenNombre: '',
+            ciudadDestinoNombre: '',
             tipoPaquete: '',
             costoProducto: 0,
             dondePaga: false,
             costoServicio: 0,
+            isCalculatingQuote: false,
 
 
             // Método para actualizar el servicio seleccionado
@@ -44,7 +50,10 @@ export const useCotizacionStore = create<FormState & FormActions>()(
                 set((state) => {
                     const updatedState = { ...state, [field]: value };
 
-                    const newTotal = updatedState.calculateQuote()
+                    const newTotal = updatedState.calculateQuote({
+                        ciudadOrigenId: updatedState.ciudadOrigen,
+                        ciudadDestinoId: updatedState.ciudadDestino,
+                    });
 
                     return { ...updatedState, setTotal: newTotal };
                 })
@@ -59,10 +68,13 @@ export const useCotizacionStore = create<FormState & FormActions>()(
                     cantidadPaquetes: 1,
                     ciudadOrigen: '',
                     ciudadDestino: '',
+                    ciudadOrigenNombre: '',
+                    ciudadDestinoNombre: '',
                     tipoPaquete: '',
                     costoProducto: 0,
                     dondePaga: false,
                     costoServicio: 0,
+                    isCalculatingQuote: false,
                 })),
 
             // Método para guardar todo el formulario
@@ -70,19 +82,31 @@ export const useCotizacionStore = create<FormState & FormActions>()(
                 set(() => ({
                     ...data,
                     cantidadPaquetes: get().cantidadPaquetes,
-                    setTotal: get().calculateQuote(),
+                    setTotal: get().calculateQuote({ ciudadOrigenId: data.ciudadOrigen, ciudadDestinoId: data.ciudadDestino }),
                 }))
 
             },
 
 
             // Método para calcular el total de la cotización
-            calculateQuote: () => {
-                const total = 35; // Precio fijo de 35
+            calculateQuote: async (params: { ciudadOrigenId: string; ciudadDestinoId: string }) => {
+                set(() => ({ isCalculatingQuote: true }));
 
-                set(() => ({ costoServicio: total }));
+                try {
+                    const response = await obtenerCotizacion({
+                        municipioOrigenId: params.ciudadOrigenId,
+                        municipioDestinoId: params.ciudadDestinoId,
+                    });
 
-                return total;
+                    const total = parseFloat(response.data.costo) || 0; // Extract the numeric value from the response
+
+                    set(() => ({ costoServicio: total, isCalculatingQuote: false }));
+
+                    return total;
+                } catch (error) {
+                    set(() => ({ isCalculatingQuote: false }));
+                    throw error;
+                }
             },
         }),
         {
