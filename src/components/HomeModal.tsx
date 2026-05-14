@@ -6,6 +6,7 @@ import {
   ModalFooter,
   Button,
 } from "@nextui-org/react";
+import { descargarGuia } from "@/lib/descargar-guia";
 import { BadgeCheck, CircleArrowDown, FileDown, Loader2 } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
@@ -21,26 +22,12 @@ export default function HomeModal({ isOpen, guia }: Props) {
   const handleDownloadGuia = async (guia: string) => {
     setLoading(true);
     try {
-      const res = await fetch(
-        `https://sistema.tpcxpress.com/api/pdf?guia=${guia}`
-      );
+      await descargarGuia(guia);
 
-      if (!res.ok) return new Response(res.statusText, { status: res.status });
-
-      const blob = await res.blob();
-
-      const url = URL.createObjectURL(blob);
-      const link = document.createElement("a");
-
-      link.href = url;
-      link.download = `guia-${guia}.pdf`;
-      document.body.appendChild(link);
-      link.click();
-      link.remove();
-      URL.revokeObjectURL(url);
+      toast.success("Guía descargada correctamente");
     } catch (error) {
       console.log(error);
-      toast.error("¡Ha ocurrido un error al descargar el guia!");
+      toast.error("¡Ha ocurrido un error al descargar la guía!");
     } finally {
       setLoading(false);
     }
@@ -71,7 +58,7 @@ export default function HomeModal({ isOpen, guia }: Props) {
         <ModalFooter className="flex flex-col sm:flex-row items-start justify-center ">
           <Button
             variant="solid"
-            disabled={loading}
+            disabled={loading || !guia}
             endContent={
               loading ? (
                 <Loader2 size={22} className="animate-spin" />
